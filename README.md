@@ -171,7 +171,7 @@ public class Trophy {
      */
     private String keyInfo;
 
-    //你也可以在这里生成二维码
+    //你也可以在这里生成二维码图片
     public void genQRCodeImage(String path){
       //some operations
     }
