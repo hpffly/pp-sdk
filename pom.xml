@@ -9,6 +9,37 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>Payplus-SDK for Developers quickly bridging their project and Payment package.</description>
+    <url>https://github.com/sharq34/pp-sdk</url>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Marco Jan</name>
+            <email>marcojan11@outlook.com</email>
+            <organization>Yeepay</organization>
+            <organizationUrl>http://www.yeepay.com</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>
+            scm:git:https://github.com/sharq34/pp-sdk.git
+        </connection>
+        <developerConnection>
+            scm:git:https://github.com/sharq34/pp-sdk.git
+        </developerConnection>
+        <url>https://github.com/sharq34/pp-sdk</url>
+        <tag>1.0</tag>
+    </scm>
+
     <dependencies>
         <dependency>
             <groupId>com.yeepay.g3.yop</groupId>
