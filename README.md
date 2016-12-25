@@ -48,7 +48,7 @@ trophy.print();
 
 >*注2：会有一份表单让开发者更清晰地知道哪些参数不是必需的。*
 
-* 这已经是一个极简的调用了，当然我们还能再做一些减法，**一行代码调用Payplus服务**：
+* 这已经是一个极简的调用了，当然我们还能再做一些减法：**一行代码调用Payplus服务**
 
 ```java
 
@@ -118,7 +118,7 @@ Boolean flag = PayplusUtil.isNull(obj);
 ```
 
 * 常量URI  
->*PayplusURI* 定义了全部可调用的服务，完整版请参阅接口文档。
+> *PayplusURI* 定义了全部可调用的服务，完整版请参阅接口文档。
 
 ```java
 public class PayplusURI {
