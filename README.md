@@ -78,7 +78,7 @@ payplusConnector.call(PayplusURI.USER_REGISTER, registerReq);
 ```
 
 ## 二、一些细节
->*PayplusUtil* 提供了若干个工具方法，提供给懒惰的人，对垒代码有莫名热忱的攻城狮请绕行...  
+> *PayplusUtil* 提供了若干个工具方法，提供给懒惰的人，对垒代码有莫名热忱的攻城狮请绕行...  
 
 * 自动生成requestNo
 
@@ -118,7 +118,8 @@ Boolean flag = PayplusUtil.isNull(obj);
 ```
 
 * 常量URI  
-> *PayplusURI* 定义了全部可调用的服务，完整版请参阅接口文档。
+ 
+>*PayplusURI* 定义了全部可调用的服务，完整版请参阅接口文档。
 
 ```java
 public class PayplusURI {
