@@ -8,9 +8,9 @@ import org.apache.log4j.Logger;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -93,7 +93,34 @@ public class PayplusUtil {
         }
     }
 
-    public static void generateQRCodeImage(Trophy trophy, String path) {
+    public static String getBase64Stream(String path) {
+
+        File file = new File(path);
+        FileInputStream fs = null;
+        ByteBuffer byteBuffer = null;
+        try {
+            fs = new FileInputStream(file);
+            FileChannel channel = fs.getChannel();
+            byteBuffer = ByteBuffer.allocate((int) channel.size());
+            channel.read(byteBuffer);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                fs.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String base64FileStr = org.apache.commons.codec.binary.Base64.encodeBase64String(byteBuffer.array());
+
+        return base64FileStr;
+    }
+
+    public static void genQRCodeImage(Trophy trophy, String path) {
 
         if (trophy == null || trophy.getKeyInfo() == null || "".equals(trophy.getKeyInfo()) || trophy.getKeyInfo().contains("https://")) {
             throw new QRCodeException("\n\nHi buddy, please kindly check: \n 1, The request got correct return. \n 2, The service you called will send you QR code back. \n");

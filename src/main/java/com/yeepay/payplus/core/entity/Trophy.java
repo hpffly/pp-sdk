@@ -80,4 +80,8 @@ public class Trophy {
     public void print() {
         logger.info("[Reponse of Payplus]\n" + format());
     }
+
+    public void genQRCodeImage(String path){
+        PayplusUtil.genQRCodeImage(this, path);
+    }
 }

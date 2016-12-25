@@ -186,11 +186,11 @@ public class PayplusConnector {
     }
 
     /**
-     * insert requestNo if non-exist
+     * insert requestNo, merchantNo if non-exist
      *
      * @param paraMap
      */
-    private void insertRequestNo(Map<String, String> paraMap) {
+    private void insertDefaultParameters(Map<String, String> paraMap) {
 
         if (paraMap.containsKey("requestNo")) {
             String requestNo = paraMap.get("requestNo");
@@ -199,11 +199,18 @@ public class PayplusConnector {
                 paraMap.put("requestNo", PayplusUtil.genRequestNo());
         }
 
+        if (paraMap.containsKey("merchantNo")) {
+            String merchantNo = paraMap.get("merchantNo");
+
+            if (PayplusUtil.isNull(merchantNo))
+                paraMap.put("merchantNo", PayplusConfig.merchantNo);
+        }
+
     }
 
     private void setUpYOPRequest(YopRequest request, Map<String, String> paraMap) {
 
-        insertRequestNo(paraMap);
+        insertDefaultParameters(paraMap);
 
         Set keys = paraMap.keySet();
         Iterator it = keys.iterator();

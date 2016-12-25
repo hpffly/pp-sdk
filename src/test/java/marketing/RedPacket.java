@@ -23,9 +23,9 @@ public class RedPacket {
     public void send() {
         PayplusConnector connector = new PayplusConnector();
 
-        SendRedPacketReq sendRedPacketReq = new SendRedPacketReq(PayplusConfig.MERCHANT_NO, PayplusConfig.JOEY_TRIBBIANI, activeNo);
+        SendRedPacketReq sendRedPacketReq = new SendRedPacketReq(null, PayplusConfig.JOEY_TRIBBIANI, activeNo);
 
-        Trophy trophy = connector.call(PayplusURI.MERCHANT_SENDREDPACKET, sendRedPacketReq);
+        Trophy trophy = connector.call(PayplusURI.MARKETING_REDPACKET_SEND, sendRedPacketReq);
 
         trophy.print();
 
@@ -36,9 +36,9 @@ public class RedPacket {
     public void receive(){
         PayplusConnector connector = new PayplusConnector();
 
-        ReceiveRedPacketReq receiveRedPacketReq = new ReceiveRedPacketReq(marketNo, PayplusConfig.MERCHANT_NO, "3991941028905236025");
+        ReceiveRedPacketReq receiveRedPacketReq = new ReceiveRedPacketReq(marketNo, null, "3991941028905236025");
 
-        Trophy trophy = connector.call(PayplusURI.USER_RECEIVEREDPACKET, receiveRedPacketReq);
+        Trophy trophy = connector.call(PayplusURI.MARKETING_REDPACKET_RECEIVE, receiveRedPacketReq);
 
         trophy.print();
 
@@ -49,9 +49,9 @@ public class RedPacket {
     public void unreceive(){
         PayplusConnector connector = new PayplusConnector();
 
-        UnReceiveRedPacketReq unReceiveRedPacketReq = new UnReceiveRedPacketReq(activeNo, PayplusConfig.MERCHANT_NO, PayplusConfig.JOEY_TRIBBIANI);
+        UnReceiveRedPacketReq unReceiveRedPacketReq = new UnReceiveRedPacketReq(activeNo, null, PayplusConfig.JOEY_TRIBBIANI);
 
-        Trophy trophy = connector.call(PayplusURI.MERCHANT_SENDREDPACKET, unReceiveRedPacketReq);
+        Trophy trophy = connector.call(PayplusURI.MARKETING_REDPACKET_UNRECEIVED, unReceiveRedPacketReq);
 
         trophy.print();
 

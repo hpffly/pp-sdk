@@ -8,10 +8,7 @@ import java.util.ResourceBundle;
 public class PayplusConfig {
 
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    /**
-     * 商户编号
-     */
-    public static final String MERCHANT_NO = "BM12345678901221";
+
     /**
      * 测试用户-1
      */
@@ -53,6 +50,11 @@ public class PayplusConfig {
      */
     public static String url;
 
+    /**
+     * 测试merchantNo
+     */
+    public static String merchantNo;
+
     public static void init() {
 
         ResourceBundle rb = ResourceBundle.getBundle("cfg");
@@ -61,7 +63,7 @@ public class PayplusConfig {
         appSecret = rb.getString("APP_SECRET");
         url = rb.getString("URL");
         signAlgorithm = rb.getString("SIGN_ALGORITHM");
-
+        merchantNo = rb.getString("MERCHANT_NO");
     }
 
 }

@@ -18,17 +18,21 @@ public class Info {
     @Test
     public void register() {
 
-        Trophy trophy = new PayplusConnector().call(PayplusURI.USER_REGISTER, new RegisterReq(null, PayplusConfig.MERCHANT_NO, PayplusUtil.genRequestNo()));
+        Trophy trophy = new PayplusConnector().call(PayplusURI.USER_REGISTER, new RegisterReq(null, null, PayplusUtil.genRequestNo()));
 
         trophy.print();
 
         Assert.assertEquals(trophy.getState(), 1);
 
+        //new PayplusConnector().call(PayplusURI.USER_REGISTER, new RegisterReq(null,null,"Joey")).print();
+
+        trophy.getRequestNo();
+
     }
 
     @Test
     public void auth() {
-        Trophy trophy = new PayplusConnector().call(PayplusURI.USER_AUTH, new AuthReq(PayplusUtil.genRequestNo(), PayplusConfig.MERCHANT_NO, PayplusConfig.JOEY_TRIBBIANI, "payplus.yeepay.com", "payplus.yeepay.com", null));
+        Trophy trophy = new PayplusConnector().call(PayplusURI.USER_AUTH, new AuthReq(PayplusUtil.genRequestNo(), null, PayplusConfig.JOEY_TRIBBIANI, "payplus.yeepay.com", "payplus.yeepay.com", null));
 
         trophy.print();
     }

@@ -3,7 +3,6 @@ package user;
 import com.yeepay.payplus.bo.VerifyPasswordReq;
 import com.yeepay.payplus.core.PayplusConnector;
 import com.yeepay.payplus.core.entity.Trophy;
-import com.yeepay.payplus.util.PayplusConfig;
 import com.yeepay.payplus.util.PayplusURI;
 import com.yeepay.payplus.util.PayplusUtil;
 import org.junit.Test;
@@ -20,7 +19,6 @@ public class Password {
 
         VerifyPasswordReq verifyPasswordReq = new VerifyPasswordReq();
 
-        verifyPasswordReq.setMerchantNo(PayplusConfig.MERCHANT_NO);
         verifyPasswordReq.setMerchantUserId("yangyang1");
         verifyPasswordReq.setRequestNo(PayplusUtil.genRequestNo());
         verifyPasswordReq.setTokenBizType(verifyPasswordReq.TRANSFER);

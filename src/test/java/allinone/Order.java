@@ -42,7 +42,6 @@ public class Order {
         trxExtraInfo.put("userip", "123.147.246.146");
 
         consumeReq.setRequestNo(requestNo);
-        consumeReq.setMerchantNo(PayplusConfig.MERCHANT_NO);
         consumeReq.setMerchantUserId(PayplusConfig.JOEY_TRIBBIANI);
         consumeReq.setOrderAmount("0.01");
         consumeReq.setFundAmount("0.01");
@@ -64,7 +63,7 @@ public class Order {
         trophy.print();
 
         if (payTool.equals("WECHATSCAN") || payTool.equals("ALIPAYSCAN")) {
-            PayplusUtil.generateQRCodeImage(trophy, "/Users/edison/Downloads/im.jpg");
+            PayplusUtil.genQRCodeImage(trophy, "/Users/edison/Downloads/im.jpg");
         }
     }
 
@@ -113,7 +112,7 @@ public class Order {
 
         PayplusConnector payplusConnector = new PayplusConnector();
 
-        Trophy trophy = payplusConnector.call(PayplusURI.REMIT_REMIT, remitReq);
+        Trophy trophy = payplusConnector.call(PayplusURI.MERCHANT_REMIT, remitReq);
 
         trophy.print();
 
@@ -124,11 +123,11 @@ public class Order {
     //@Test
     public void queryRemits(){
 
-        QueryRemitReq queryRemitReq = new QueryRemitReq(PayplusConfig.MERCHANT_NO, "1482465587650", null);
+        QueryRemitReq queryRemitReq = new QueryRemitReq(null, "1482465587650", null);
 
         PayplusConnector payplusConnector = new PayplusConnector();
 
-        Trophy trophy = payplusConnector.call(PayplusURI.REMIT_QUERY, queryRemitReq);
+        Trophy trophy = payplusConnector.call(PayplusURI.MERCHANT_REMIT_QUERY, queryRemitReq);
 
         trophy.print();
 

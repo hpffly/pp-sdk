@@ -3,7 +3,6 @@ package user;
 import com.yeepay.payplus.bo.TransferReq;
 import com.yeepay.payplus.core.PayplusConnector;
 import com.yeepay.payplus.core.entity.Trophy;
-import com.yeepay.payplus.util.PayplusConfig;
 import com.yeepay.payplus.util.PayplusURI;
 import org.junit.Test;
 
@@ -23,7 +22,6 @@ public class Trade {
         transferReq.setFromUserNo("yangyang1");
         transferReq.setToUserNo("xiaolong");
         transferReq.setToken("91e473364d9b427c85c87e42aeef2baa");
-        transferReq.setMerchantNo(PayplusConfig.MERCHANT_NO);
         transferReq.setTransferType(transferReq.USER_TO_USER);
 
         Trophy trophy = payplusConnector.call(PayplusURI.ORDER_TRANSFER, transferReq);
