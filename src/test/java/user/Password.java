@@ -1,6 +1,6 @@
 package user;
 
-import com.yeepay.payplus.bo.VerifyPasswordReq;
+import com.yeepay.payplus.bo.UserVerifyPWDReq;
 import com.yeepay.payplus.core.PayplusConnector;
 import com.yeepay.payplus.core.entity.Trophy;
 import com.yeepay.payplus.util.PayplusURI;
@@ -17,15 +17,15 @@ public class Password {
 
         PayplusConnector payplusConnector = new PayplusConnector();
 
-        VerifyPasswordReq verifyPasswordReq = new VerifyPasswordReq();
+        UserVerifyPWDReq userVerifyPWDReq = new UserVerifyPWDReq();
 
-        verifyPasswordReq.setMerchantUserId("yangyang1");
-        verifyPasswordReq.setRequestNo(PayplusUtil.genRequestNo());
-        verifyPasswordReq.setTokenBizType(verifyPasswordReq.TRANSFER);
-        verifyPasswordReq.setWebCallBackUrl("payplus.yeepay.com");
-        verifyPasswordReq.setReturnUrl("payplus.yeepay.com");
+        userVerifyPWDReq.setMerchantUserId("yangyang1");
+        userVerifyPWDReq.setRequestNo(PayplusUtil.genRequestNo());
+        userVerifyPWDReq.setTokenBizType(UserVerifyPWDReq.TOKENBIZTYPE_TRANSFER);
+        userVerifyPWDReq.setWebCallBackUrl("payplus.yeepay.com");
+        userVerifyPWDReq.setReturnUrl("payplus.yeepay.com");
 
-        Trophy trophy = payplusConnector.call(PayplusURI.USER_VERIFYPWD, verifyPasswordReq);
+        Trophy trophy = payplusConnector.call(PayplusURI.USER_VERIFYPWD, userVerifyPWDReq);
 
         trophy.print();
 

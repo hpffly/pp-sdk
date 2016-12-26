@@ -1,8 +1,8 @@
 package allinone;
 
-import com.yeepay.payplus.bo.ConsumeReq;
-import com.yeepay.payplus.bo.QueryRemitReq;
-import com.yeepay.payplus.bo.RemitReq;
+import com.yeepay.payplus.bo.OrderConsumeReq;
+import com.yeepay.payplus.bo.MerchantRemitQueryReq;
+import com.yeepay.payplus.bo.MerchantRemitReq;
 import com.yeepay.payplus.core.PayplusConnector;
 import com.yeepay.payplus.core.entity.Trophy;
 import com.yeepay.payplus.util.PayplusConfig;
@@ -24,9 +24,9 @@ public class Order {
 
     @Test
     public void consume() throws Exception {
-        ConsumeReq consumeReq = new ConsumeReq();
+        OrderConsumeReq orderConsumeReq = new OrderConsumeReq();
 
-        String payTool = "ALIPAYAPP";
+        String payTool = "";
         String requestNo = String.valueOf(System.currentTimeMillis());
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -41,24 +41,24 @@ public class Order {
         trxExtraInfo.put("terminalid", "865585020924282");
         trxExtraInfo.put("userip", "123.147.246.146");
 
-        consumeReq.setRequestNo(requestNo);
-        consumeReq.setMerchantUserId(PayplusConfig.JOEY_TRIBBIANI);
-        consumeReq.setOrderAmount("0.01");
-        consumeReq.setFundAmount("0.01");
-        consumeReq.setPayTool(payTool);
-        consumeReq.setMerchantExpireTime("60");
-        consumeReq.setMerchantOrderDate(format.format(new Date()));
-        consumeReq.setWebCallbackUrl("payplus.yeepay.com");
-        consumeReq.setServerCallbackUrl("payplus.yeepay.com");
-        consumeReq.setProductCatalog("30");
-        consumeReq.setProductName("测试商品");
-        consumeReq.setProductDesc("测试商品描述");
-        consumeReq.setMcc("3101");
-        consumeReq.setIp("8.8.8.8");
-        consumeReq.setOpenId("ogiZrwBxHMFMJP5npHp0WOb84H94");
-        consumeReq.setTrxExtraInfo(PayplusUtil.convert2JsonString(trxExtraInfo));
+        orderConsumeReq.setRequestNo(requestNo);
+        orderConsumeReq.setMerchantUserId(PayplusConfig.JOEY_TRIBBIANI);
+        orderConsumeReq.setOrderAmount("0.01");
+        orderConsumeReq.setFundAmount("0.01");
+        orderConsumeReq.setPayTool(payTool);
+        orderConsumeReq.setMerchantExpireTime("60");
+        orderConsumeReq.setMerchantOrderDate(format.format(new Date()));
+        orderConsumeReq.setWebCallbackUrl("payplus.yeepay.com");
+        orderConsumeReq.setServerCallbackUrl("payplus.yeepay.com");
+        orderConsumeReq.setProductCatalog("30");
+        orderConsumeReq.setProductName("测试商品");
+        orderConsumeReq.setProductDesc("测试商品描述");
+        orderConsumeReq.setMcc("3101");
+        orderConsumeReq.setIp("8.8.8.8");
+        orderConsumeReq.setOpenId("ogiZrwBxHMFMJP5npHp0WOb84H94");
+        orderConsumeReq.setTrxExtraInfo(PayplusUtil.convert2JsonString(trxExtraInfo));
 
-        Trophy trophy = new PayplusConnector().call(PayplusURI.ORDER_CONSUME, consumeReq);
+        Trophy trophy = new PayplusConnector().call(PayplusURI.ORDER_CONSUME, orderConsumeReq);
 
         trophy.print();
 
@@ -108,11 +108,11 @@ public class Order {
         remitInfosMap.put("leaveWord","易宝测试");
         remitInfosMap.put("value","0.01");
 
-        RemitReq remitReq = new RemitReq(PayplusUtil.genRequestNo(), "payplus.yeepay.com", PayplusUtil.convert2JsonString(remitInfosMap), "1482465587650");
+        MerchantRemitReq merchantRemitReq = new MerchantRemitReq(PayplusUtil.genRequestNo(), "payplus.yeepay.com", PayplusUtil.convert2JsonString(remitInfosMap), "1482465587650");
 
         PayplusConnector payplusConnector = new PayplusConnector();
 
-        Trophy trophy = payplusConnector.call(PayplusURI.MERCHANT_REMIT, remitReq);
+        Trophy trophy = payplusConnector.call(PayplusURI.MERCHANT_REMIT, merchantRemitReq);
 
         trophy.print();
 
@@ -123,11 +123,11 @@ public class Order {
     //@Test
     public void queryRemits(){
 
-        QueryRemitReq queryRemitReq = new QueryRemitReq(null, "1482465587650", null);
+        MerchantRemitQueryReq merchantRemitQueryReq = new MerchantRemitQueryReq(null, "1482465587650", null);
 
         PayplusConnector payplusConnector = new PayplusConnector();
 
-        Trophy trophy = payplusConnector.call(PayplusURI.MERCHANT_REMIT_QUERY, queryRemitReq);
+        Trophy trophy = payplusConnector.call(PayplusURI.MERCHANT_REMIT_QUERY, merchantRemitQueryReq);
 
         trophy.print();
 

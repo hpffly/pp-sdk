@@ -3,10 +3,10 @@ package com.yeepay.payplus.bo;
 /**
  * Created by Marco on 21/12/2016.
  */
-public class TransferReq extends BaseBO {
+public class OrderTransferReq extends BaseBO {
 
-    public static final String USER_TO_USER = "USER_TO_USER";
-    public static final String CARD_TO_USER = "CARD_TO_USER";
+    public static final String TRANSFERTYPE_USER_TO_USER = "USER_TO_USER";
+    public static final String TRANSFERTYPE_CARD_TO_USER = "CARD_TO_USER";
 
     private String transferType;
     private String amount;

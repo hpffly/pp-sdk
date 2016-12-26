@@ -1,8 +1,8 @@
 package marketing;
 
-import com.yeepay.payplus.bo.ReceiveRedPacketReq;
-import com.yeepay.payplus.bo.SendRedPacketReq;
-import com.yeepay.payplus.bo.UnReceiveRedPacketReq;
+import com.yeepay.payplus.bo.MarketingRedPacketReceiveReq;
+import com.yeepay.payplus.bo.MarketingRedPacketSendReq;
+import com.yeepay.payplus.bo.MarketingRedPacketUnreceivedReq;
 import com.yeepay.payplus.core.PayplusConnector;
 import com.yeepay.payplus.core.entity.Trophy;
 import com.yeepay.payplus.util.PayplusConfig;
@@ -23,9 +23,9 @@ public class RedPacket {
     public void send() {
         PayplusConnector connector = new PayplusConnector();
 
-        SendRedPacketReq sendRedPacketReq = new SendRedPacketReq(null, PayplusConfig.JOEY_TRIBBIANI, activeNo);
+        MarketingRedPacketSendReq marketingRedPacketSendReq = new MarketingRedPacketSendReq(null, PayplusConfig.JOEY_TRIBBIANI, activeNo);
 
-        Trophy trophy = connector.call(PayplusURI.MARKETING_REDPACKET_SEND, sendRedPacketReq);
+        Trophy trophy = connector.call(PayplusURI.MARKETING_REDPACKET_SEND, marketingRedPacketSendReq);
 
         trophy.print();
 
@@ -36,9 +36,9 @@ public class RedPacket {
     public void receive(){
         PayplusConnector connector = new PayplusConnector();
 
-        ReceiveRedPacketReq receiveRedPacketReq = new ReceiveRedPacketReq(marketNo, null, "3991941028905236025");
+        MarketingRedPacketReceiveReq marketingRedPacketReceiveReq = new MarketingRedPacketReceiveReq(marketNo, null, "3991941028905236025");
 
-        Trophy trophy = connector.call(PayplusURI.MARKETING_REDPACKET_RECEIVE, receiveRedPacketReq);
+        Trophy trophy = connector.call(PayplusURI.MARKETING_REDPACKET_RECEIVE, marketingRedPacketReceiveReq);
 
         trophy.print();
 
@@ -49,9 +49,9 @@ public class RedPacket {
     public void unreceive(){
         PayplusConnector connector = new PayplusConnector();
 
-        UnReceiveRedPacketReq unReceiveRedPacketReq = new UnReceiveRedPacketReq(activeNo, null, PayplusConfig.JOEY_TRIBBIANI);
+        MarketingRedPacketUnreceivedReq marketingRedPacketUnreceivedReq = new MarketingRedPacketUnreceivedReq(activeNo, null, PayplusConfig.JOEY_TRIBBIANI);
 
-        Trophy trophy = connector.call(PayplusURI.MARKETING_REDPACKET_UNRECEIVED, unReceiveRedPacketReq);
+        Trophy trophy = connector.call(PayplusURI.MARKETING_REDPACKET_UNRECEIVED, marketingRedPacketUnreceivedReq);
 
         trophy.print();
 

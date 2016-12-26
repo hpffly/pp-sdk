@@ -3,14 +3,14 @@ package com.yeepay.payplus.bo;
 /**
  * Created by Marco on 23/12/2016.
  */
-public class RemitReq extends BaseBO{
+public class MerchantRemitReq extends BaseBO{
 
     private String remiteInfos;
 
-    public RemitReq() {
+    public MerchantRemitReq() {
     }
 
-    public RemitReq(String requestNo, String serverCallbackUrl, String remitInfos, String trxRequestNo){
+    public MerchantRemitReq(String requestNo, String serverCallbackUrl, String remitInfos, String trxRequestNo){
         super.setRequestNo(requestNo);
         super.setServerCallbackUrl(serverCallbackUrl);
         super.setTrxRequestNo(trxRequestNo);

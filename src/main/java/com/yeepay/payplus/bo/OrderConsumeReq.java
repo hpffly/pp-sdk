@@ -3,7 +3,7 @@ package com.yeepay.payplus.bo;
 /**
  * Created by Marco on 16/12/2016.
  */
-public class ConsumeReq extends BaseBO {
+public class OrderConsumeReq extends BaseBO {
 
     private String orderAmount;
     private String fundAmount;
@@ -23,9 +23,6 @@ public class ConsumeReq extends BaseBO {
     private String marketingExtraInfo;
     private String ip;
     private String openId;
-
-    public ConsumeReq() {
-    }
 
     public String getOrderAmount() {
         return orderAmount;

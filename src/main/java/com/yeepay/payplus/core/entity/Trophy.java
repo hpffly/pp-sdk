@@ -78,7 +78,7 @@ public class Trophy {
     }
 
     public void print() {
-        logger.info("[Reponse of Payplus]\n" + format());
+        logger.debug("[Reponse of Payplus]\n" + format());
     }
 
     public void genQRCodeImage(String path){

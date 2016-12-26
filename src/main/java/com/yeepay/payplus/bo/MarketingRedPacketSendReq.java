@@ -3,11 +3,14 @@ package com.yeepay.payplus.bo;
 /**
  * Created by Marco on 16/12/2016.
  */
-public class SendRedPacketReq extends BaseBO{
+public class MarketingRedPacketSendReq extends BaseBO{
 
     private String activeNo;
 
-    public SendRedPacketReq(String merchantNo, String merchantUserId, String activeNo) {
+    public MarketingRedPacketSendReq() {
+    }
+
+    public MarketingRedPacketSendReq(String merchantNo, String merchantUserId, String activeNo) {
         super.setMerchantNo(merchantNo);
         super.setMerchantUserId(merchantUserId);
         this.activeNo = activeNo;

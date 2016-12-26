@@ -100,7 +100,7 @@ public class PayplusConnector {
         else if (paras.containsKey("activeNo"))
             trophy.setActiveNo(PayplusUtil.isNull(paras.get("activeNo")) ? "activeNo is null" : paras.get("activeNo"));
 
-        logger.info(formattedRequestParameters(paras));
+        logger.debug(formattedRequestParameters(paras));
 
         YopResponse resp = YopClient.post(uri, request);
 

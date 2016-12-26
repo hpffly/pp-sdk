@@ -41,6 +41,16 @@ public class PayplusURI {
     public static final String MERCHANT_TRANSFER_QUERY = "/rest/v1.0/payplus/transfer/merchantQuery";
 
     /**
+     * 4.1.7 企业付款
+     */
+    public static final String MERCHANT_REMIT = "/rest/v1.0/payplus/remite/remite";
+
+    /**
+     * 4.1.8 企业付款查询
+     */
+    public static final String MERCHANT_REMIT_QUERY = "/rest/v1.0/payplus/remite/query";
+
+    /**
      * 2.1.1 用户注册
      */
     public static final String USER_REGISTER = "/rest/v1.0/payplus/user/register";
@@ -198,18 +208,8 @@ public class PayplusURI {
     public static final String ORDER_DIVIDE_QUERY = "/rest/v1.0/payplus/divide/query";
 
     /**
-     * 4.1.7 企业付款
-     */
-    public static final String MERCHANT_REMIT = "/rest/v1.0/payplus/remite/remite";
-
-    /**
-     * 4.1.8 企业付款查询
-     */
-    public static final String MERCHANT_REMIT_QUERY = "/rest/v1.0/payplus/remite/query";
-
-    /**
      * 5.1.1 手续费查询
      */
-    public static final String ACCOUNTING_FEE_QUERY = "/rest/v1.0/payplus/accounting/queryFee";
+    public static final String ACCOUNTING_FEE = "/rest/v1.0/payplus/accounting/queryFee";
 }
 
