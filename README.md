@@ -188,7 +188,7 @@ Boolean flag = PayplusUtil.isNull(obj);
 
 * 常量URI  
 
->*PayplusURI* 定义了全部可调用的服务，完整版请参阅接口文档。
+>*PayplusURI* 定义了全部可调用的服务，详参[接口对照表](https://github.com/sharq34/pp-sdk/blob/master/%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3%E5%92%8CPayplusURI%E5%AF%B9%E7%85%A7%E8%A1%A8.xlsx)。
 
 ```java
 public class PayplusURI {
