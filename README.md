@@ -49,15 +49,6 @@ trophy.print();
 
 >*注2：所有接口列表中入参小于等于五个的接口，都会提供严格依照文档参数顺序的构造函数，以便快速构建代码。*
 
-#### 一行代码接入[Payplus](http://payplus.yeepay.com)服务
-> 这已经是一个极简的调用了，当然我们还能再做一些减法。
-
-```java
-
-new PayplusConnector().call(PayplusURI.USER_REGISTER, new UserRegisterReq(null, null, "Joey")).print();
-
-```
-
 #### 正式商用，你可以完善商编和密钥等信息，让这套支付系统完完全全的为你服务。
 
 > 申请使用这套支付系统：*<ppsupport@yeepay.com>*
@@ -74,9 +65,19 @@ PayplusConnector payplusConnector = new PayplusConnector(appKey, appSecret);
 
 //实例化一个注册对象
 UserRegisterReq userRegisterReq = new UserRegisterReq();
+userRegisterReq.setMerchantUserId("Joey");
 
 //调用
 payplusConnector.call(PayplusURI.USER_REGISTER, userRegisterReq);
+
+```
+
+#### 一行代码接入[Payplus](http://payplus.yeepay.com)服务
+> 这已经是一个极简的调用了，当然我们还能再做一些减法。
+
+```java
+
+new PayplusConnector().call(PayplusURI.USER_REGISTER, new UserRegisterReq(null, null, "Joey")).print();
 
 ```
 
