@@ -223,5 +223,3 @@ public class UserVerifyPWDReq extends BaseBO {
     //其他变量及set&get方法
 }
 ```
-
-#### 参考[DEMO](https://github.com/sharq34/pp-sdk/tree/master/src/test/java)
