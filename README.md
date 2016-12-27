@@ -13,6 +13,9 @@
 
 #### 测试阶段，快速接入。
 
+1. 测试阶段所有接口文档中涉及 merchantNo 都不必传参
+2. 如不传 requestNo 将使用系统自带的UUID生成对应的请求编号
+
 ```java
 //pp-sdk核心类
 PayplusConnector payplusConnector =new PayplusConnector();
