@@ -9,13 +9,32 @@ public class MerchantRemitQueryReq extends BaseBO {
      * return all remits in such trxRequestNo order, if this variable is null
      */
     private String remiteRequestNo;
+    private String merchantNo;
+    private String trxRequestNo;
 
     public MerchantRemitQueryReq() {
     }
 
+    public String getMerchantNo() {
+        return merchantNo;
+    }
+
+    public void setMerchantNo(String merchantNo) {
+        this.merchantNo = merchantNo;
+    }
+
+    public String getTrxRequestNo() {
+        return trxRequestNo;
+    }
+
+    public void setTrxRequestNo(String trxRequestNo) {
+        this.trxRequestNo = trxRequestNo;
+    }
+
     public MerchantRemitQueryReq(String merchantNo, String trxRequestNo, String remiteRequestNo) {
-        super.setMerchantNo(merchantNo);
-        super.setTrxRequestNo(trxRequestNo);
+        this.merchantNo = merchantNo;
+        this.trxRequestNo = trxRequestNo;
+
         this.remiteRequestNo = remiteRequestNo;
     }
 

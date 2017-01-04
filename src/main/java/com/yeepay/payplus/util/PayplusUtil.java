@@ -1,6 +1,6 @@
 package com.yeepay.payplus.util;
 
-import com.yeepay.g3.utils.common.json.JSONException;
+import com.yeepay.g3.utils.common.json.JSONArray;
 import com.yeepay.g3.utils.common.json.JSONObject;
 import com.yeepay.payplus.core.entity.Trophy;
 import com.yeepay.payplus.exception.QRCodeException;
@@ -35,32 +35,61 @@ public class PayplusUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(genRequestNo());
+        List<JSONObject> list = new ArrayList<JSONObject>();
+        Map remitInfosMap = new HashMap<String, String>();
+
+        remitInfosMap.put("remiteType", "AMOUNT");
+        remitInfosMap.put("bankCode", "CMB");
+        remitInfosMap.put("bankName", "招商银行");
+        remitInfosMap.put("branchBankName", "");
+        remitInfosMap.put("userName", "杨洋");
+        remitInfosMap.put("cardNo", "6214850107101245");
+        remitInfosMap.put("bankAccountType", "pr");
+        remitInfosMap.put("province", "110000");
+        remitInfosMap.put("city", "110000");
+        remitInfosMap.put("payeeMobile", "18514591959");
+        remitInfosMap.put("leaveWord", "易宝测试");
+        remitInfosMap.put("value", "0.01");
+
+        list.add(PayplusUtil.convert2Json(remitInfosMap));
+
+        JSONArray ja = new JSONArray(list);
+
+        System.out.println(ja);
+
     }
 
     /**
-     * <p>convert map to json string</p>
+     * <p>convert a map to json Object</p>
+     * @param map
+     * @return
+     */
+    public static JSONObject convert2Json(Map<String, String> map) {
+        JSONObject jo = new JSONObject(map);
+        return jo;
+    }
+
+    /**
+     * <p>convert a map to a json string</p>
      *
      * @param map
      * @return a json string which is converted from a map.
      */
     public static String convert2JsonString(Map<String, String> map) {
+        JSONObject jo = new JSONObject(map);
+        return jo.toString();
+    }
 
-        JSONObject jo = new JSONObject();
+    /**
+     * <p>convert a list to an object of json array</p>
+     *
+     * @param list
+     * @return a json array which is converted from a list.
+     */
+    public static String convert2JsonArray(List<JSONObject> list) {
 
-        Set keys = map.keySet();
-
-        Iterator it = keys.iterator();
-        while (it.hasNext()) {
-            String key = (String) it.next();
-            String value = map.get(key);
-
-            try {
-                jo.put(key, value);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+        JSONArray jo = new JSONArray(list);
+        logger.debug(jo);
         return jo.toString();
     }
 
@@ -107,7 +136,7 @@ public class PayplusUtil {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 fs.close();
             } catch (IOException e) {

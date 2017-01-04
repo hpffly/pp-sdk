@@ -5,6 +5,8 @@ package com.yeepay.payplus.bo;
  */
 public class OrderConsumeReq extends BaseBO {
 
+    private String merchantNo;
+    private String merchantUserId;
     private String orderAmount;
     private String fundAmount;
     private String couponNos;
@@ -14,6 +16,23 @@ public class OrderConsumeReq extends BaseBO {
     private String bankCode;
     private String merchantOrderDate;
     private String trxExtraInfo;
+
+    public String getMerchantNo() {
+        return merchantNo;
+    }
+
+    public void setMerchantNo(String merchantNo) {
+        this.merchantNo = merchantNo;
+    }
+
+    public String getMerchantUserId() {
+        return merchantUserId;
+    }
+
+    public void setMerchantUserId(String merchantUserId) {
+        this.merchantUserId = merchantUserId;
+    }
+
     private String serverCallbackUrl;
     private String webCallbackUrl;
     private String mcc;

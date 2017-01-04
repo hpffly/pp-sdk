@@ -9,6 +9,7 @@ import com.yeepay.g3.utils.common.json.JSONException;
 import com.yeepay.g3.utils.common.json.JSONObject;
 import com.yeepay.payplus.bo.BaseBO;
 import com.yeepay.payplus.core.entity.Trophy;
+import com.yeepay.payplus.exception.PayplusConfigException;
 import com.yeepay.payplus.util.PayplusConfig;
 import com.yeepay.payplus.util.PayplusUtil;
 import org.apache.commons.beanutils.PropertyUtilsBean;
@@ -29,34 +30,30 @@ public class PayplusConnector {
 
     private YopRequest request;
 
-    private String appKey;
-    private String appSecret;
+    //specify path related to payplus.properties
+    public PayplusConnector(String path) {
+        //load pp-sdk configuration depending on value of ENVIRONMENT in config file
+        PayplusConfig.init(path);
+        instanceYOPRequest(PayplusConfig.APP_KEY, PayplusConfig.APP_SECRET, PayplusConfig.URL, PayplusConfig.SIGN_ALGORITHM);
+    }
 
+    /**
+     * payplus.properties is under general environment path
+     * if not, please using constructor with a path parameter
+     */
     public PayplusConnector() {
-        this(null, null);
-    }
-
-    public PayplusConnector(String appKey, String appSecret) {
-
-        this.appKey = appKey;
-        this.appSecret = appSecret;
-
-        establish();
-    }
-
-    private void establish() {
-
-        //load pp-sdk configuration
+        //load pp-sdk configuration depending on value of ENVIRONMENT in config file
         PayplusConfig.init();
+        instanceYOPRequest(PayplusConfig.APP_KEY, PayplusConfig.APP_SECRET, PayplusConfig.URL, PayplusConfig.SIGN_ALGORITHM);
+    }
 
-        /**
-         * if input parameters are null, we adopt default configuration to request payplus service.
-         * Otherwise, using customized parameters.
-         */
-        if (appKey == null && appSecret == null)
-            instanceYOPRequest(PayplusConfig.appKey, PayplusConfig.appSecret, PayplusConfig.url, PayplusConfig.signAlgorithm);
-        else
-            instanceYOPRequest(appKey, appSecret, PayplusConfig.url, PayplusConfig.signAlgorithm);
+    public PayplusConnector(String appKey,String appSecret) {
+        PayplusConfig.init();
+        //under PRODUCT model, this method cannot be allowed.
+        if(!PayplusConfig.MODEL.equals("SELF")){
+            throw new PayplusConfigException("DEPRECATED, PLEASE USING THE CONSTRUCTOR WITHOUT PARAMETERS.");
+        }
+        instanceYOPRequest(appKey, appSecret, PayplusConfig.URL, PayplusConfig.SIGN_ALGORITHM);
     }
 
     private void instanceYOPRequest(String appKey, String appSecret, String url, String signAlgorithm) {
@@ -68,10 +65,14 @@ public class PayplusConnector {
         request.setSignAlg(signAlgorithm);
     }
 
-    private String formattedRequestParameters(Map<String, String> paras) {
+    private String formattedRequestParameters(Map<String, String> paras, String uri) {
 
         Set keys = paras.keySet();
         StringBuilder parameters = new StringBuilder("\n[Request of Payplus]\n");
+
+        uri = uri.substring(uri.indexOf("payplus") + 8);
+
+        parameters.append("service: " + uri + "\n");
 
         Iterator it = keys.iterator();
         while (it.hasNext()) {
@@ -81,7 +82,7 @@ public class PayplusConnector {
             if (PayplusUtil.isNull(value))
                 continue;
 
-            parameters.append(key + " - " + value + "\n");
+            parameters.append(key + ": " + value + "\n");
         }
 
         return parameters.toString();
@@ -96,11 +97,11 @@ public class PayplusConnector {
 
         //equip requestNo, activeNo with Trophy object for users' convenience
         if (paras.containsKey("requestNo"))
-            trophy.setRequestNo(PayplusUtil.isNull(paras.get("requestNo")) ? "requestNo is null" : paras.get("requestNo"));
+            trophy.setRequestNo(paras.get("requestNo"));
         else if (paras.containsKey("activeNo"))
-            trophy.setActiveNo(PayplusUtil.isNull(paras.get("activeNo")) ? "activeNo is null" : paras.get("activeNo"));
+            trophy.setActiveNo(paras.get("activeNo"));
 
-        logger.debug(formattedRequestParameters(paras));
+        logger.debug(formattedRequestParameters(paras, uri));
 
         YopResponse resp = YopClient.post(uri, request);
 
@@ -180,17 +181,22 @@ public class PayplusConnector {
             e.printStackTrace();
         }
 
-        logger.debug("[convert BO to MAP]\n" + params);
+        //logger.debug("[convert BO to MAP]\n" + params);
 
         return params;
     }
 
     /**
-     * insert requestNo, merchantNo if non-exist
+     * set default value for white list
      *
      * @param paraMap
      */
     private void insertDefaultParameters(Map<String, String> paraMap) {
+
+        // if currently under PRODUCT environment, all required parameters is required,skipping this step
+        if (PayplusConfig.MODEL.endsWith("CUSTOMERS")) {
+            return;
+        }
 
         if (paraMap.containsKey("requestNo")) {
             String requestNo = paraMap.get("requestNo");
@@ -203,9 +209,37 @@ public class PayplusConnector {
             String merchantNo = paraMap.get("merchantNo");
 
             if (PayplusUtil.isNull(merchantNo))
-                paraMap.put("merchantNo", PayplusConfig.merchantNo);
+                paraMap.put("merchantNo", PayplusConfig.MERCHANT_NO);
         }
 
+        if (paraMap.containsKey("serverCallbackUrl")) {
+            String requestNo = paraMap.get("serverCallbackUrl");
+
+            if (PayplusUtil.isNull(requestNo))
+                paraMap.put("serverCallbackUrl", PayplusConfig.GENERAL_URL);
+        }
+
+        if (paraMap.containsKey("webCallbackUrl")) {
+            String requestNo = paraMap.get("webCallbackUrl");
+
+            if (PayplusUtil.isNull(requestNo))
+                paraMap.put("webCallbackUrl", PayplusConfig.GENERAL_URL);
+        }
+
+        // just for pwd verify
+        if (paraMap.containsKey("webCallBackUrl")) {
+            String requestNo = paraMap.get("webCallBackUrl");
+
+            if (PayplusUtil.isNull(requestNo))
+                paraMap.put("webCallBackUrl", PayplusConfig.GENERAL_URL);
+        }
+
+        if (paraMap.containsKey("returnUrl")) {
+            String requestNo = paraMap.get("returnUrl");
+
+            if (PayplusUtil.isNull(requestNo))
+                paraMap.put("returnUrl", PayplusConfig.GENERAL_URL);
+        }
     }
 
     private void setUpYOPRequest(YopRequest request, Map<String, String> paraMap) {
@@ -218,6 +252,7 @@ public class PayplusConnector {
         while (it.hasNext()) {
             String key = (String) it.next();
             String value = paraMap.get(key);
+            // hiding null value for format
             request.addParam(key, value == null || value == "null" ? "" : value);
         }
     }

@@ -15,11 +15,13 @@ import org.junit.Test;
  */
 public class RedPacket {
 
-    String activeNo = "AMACT20161222175211567hhfeSRC";
+    // id of marketing
+    String activeNo = "AMACT20161222175048464UePoYsN";
 
-    String marketNo = "RSX20161222175218627U88G4RNZ";
+    // id of redpacket
+    String marketNo = "RSX20170104101059209XSYN4M5L";
 
-    //@Test
+    @Test
     public void send() {
         PayplusConnector connector = new PayplusConnector();
 
@@ -36,7 +38,7 @@ public class RedPacket {
     public void receive(){
         PayplusConnector connector = new PayplusConnector();
 
-        MarketingRedPacketReceiveReq marketingRedPacketReceiveReq = new MarketingRedPacketReceiveReq(marketNo, null, "3991941028905236025");
+        MarketingRedPacketReceiveReq marketingRedPacketReceiveReq = new MarketingRedPacketReceiveReq(marketNo, null, PayplusConfig.JOEY_TRIBBIANI);
 
         Trophy trophy = connector.call(PayplusURI.MARKETING_REDPACKET_RECEIVE, marketingRedPacketReceiveReq);
 
@@ -45,11 +47,11 @@ public class RedPacket {
         Assert.assertEquals(trophy.getState(),1);
     }
 
-    //@Test
-    public void unreceive(){
+    @Test
+    public void unreceived(){
         PayplusConnector connector = new PayplusConnector();
 
-        MarketingRedPacketUnreceivedReq marketingRedPacketUnreceivedReq = new MarketingRedPacketUnreceivedReq(activeNo, null, PayplusConfig.JOEY_TRIBBIANI);
+        MarketingRedPacketUnreceivedReq marketingRedPacketUnreceivedReq = new MarketingRedPacketUnreceivedReq(activeNo, null, PayplusConfig.RACHEL_GREEN);
 
         Trophy trophy = connector.call(PayplusURI.MARKETING_REDPACKET_UNRECEIVED, marketingRedPacketUnreceivedReq);
 

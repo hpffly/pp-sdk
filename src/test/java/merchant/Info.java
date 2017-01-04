@@ -20,7 +20,7 @@ public class Info {
         LedgerRegisterReq ledgerRegisterReq = new LedgerRegisterReq();
 
         ledgerRegisterReq.setRequestNo(PayplusUtil.genRequestNo());
-        ledgerRegisterReq.setMerchantNo(PayplusConfig.merchantNo);
+        ledgerRegisterReq.setMerchantNo(PayplusConfig.MERCHANT_NO);
         ledgerRegisterReq.setProvince("北京");
         ledgerRegisterReq.setCity("北京");
         ledgerRegisterReq.setCustomerStyle(LedgerRegisterReq.CUSTOMERSTYLE_PERSON);

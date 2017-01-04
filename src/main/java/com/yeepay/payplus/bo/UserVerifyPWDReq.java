@@ -5,12 +5,14 @@ package com.yeepay.payplus.bo;
  */
 public class UserVerifyPWDReq extends BaseBO {
 
-    public static final String TOKENBIZTYPE_TRANSFER = "ORDER_TRANSFER";
+    public static final String TOKENBIZTYPE_TRANSFER = "TRANSFER";
     public static final String TOKENBIZTYPE_WITHDRAW = "WITHDRAW";
     public static final String TOKENBIZTYPE_UN_BIND_CARD = "UN_BIND_CARD";
 
-    private String tokenBizType;
+    private String merchantNo;
+    private String merchantUserId;
     private String webCallBackUrl;
+    private String tokenBizType;
     private String returnUrl;
     private String clientSource;
 
@@ -20,6 +22,22 @@ public class UserVerifyPWDReq extends BaseBO {
 
     public void setTokenBizType(String tokenBizType) {
         this.tokenBizType = tokenBizType;
+    }
+
+    public String getMerchantNo() {
+        return merchantNo;
+    }
+
+    public void setMerchantNo(String merchantNo) {
+        this.merchantNo = merchantNo;
+    }
+
+    public String getMerchantUserId() {
+        return merchantUserId;
+    }
+
+    public void setMerchantUserId(String merchantUserId) {
+        this.merchantUserId = merchantUserId;
     }
 
     public String getWebCallBackUrl() {

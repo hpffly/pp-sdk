@@ -15,6 +15,7 @@ public class LedgerUploadReq extends BaseBO {
     public static final String QUALIFICATIONTYPE_BANK_ACCOUNT_LICENCE = "BANK_ACCOUNT_LICENCE";
     public static final String QUALIFICATIONTYPE_ORGANIZATION_CODE = "ORGANIZATION_CODE";
 
+    private String merchantNo;
     private String ledgerNo;
     private String qualificationType;
     private String imgBase64Buffer;
@@ -23,7 +24,7 @@ public class LedgerUploadReq extends BaseBO {
     }
 
     public LedgerUploadReq(String merchantNo, String ledgerNo, String qualificationType, String imgBase64Buffer) {
-        super.setMerchantNo(merchantNo);
+        this.merchantNo = merchantNo;
         this.ledgerNo = ledgerNo;
         this.qualificationType = qualificationType;
         this.imgBase64Buffer = imgBase64Buffer;

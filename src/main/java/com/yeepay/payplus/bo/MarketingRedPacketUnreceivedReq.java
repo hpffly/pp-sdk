@@ -6,13 +6,15 @@ package com.yeepay.payplus.bo;
 public class MarketingRedPacketUnreceivedReq extends BaseBO{
 
     private String activeNo;
+    private String merchantNo;
+    private String merchantUserId;
 
     public MarketingRedPacketUnreceivedReq() {
     }
 
     public MarketingRedPacketUnreceivedReq(String activeNo, String merchantNo, String merchantUserId) {
-        super.setMerchantNo(merchantNo);
-        super.setMerchantUserId(merchantUserId);
+        this.merchantNo = merchantNo;
+        this.merchantUserId = merchantUserId;
         this.activeNo = activeNo;
         //
     }

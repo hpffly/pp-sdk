@@ -1,8 +1,9 @@
 package allinone;
 
-import com.yeepay.payplus.bo.OrderConsumeReq;
+import com.yeepay.g3.utils.common.json.JSONObject;
 import com.yeepay.payplus.bo.MerchantRemitQueryReq;
 import com.yeepay.payplus.bo.MerchantRemitReq;
+import com.yeepay.payplus.bo.OrderConsumeReq;
 import com.yeepay.payplus.core.PayplusConnector;
 import com.yeepay.payplus.core.entity.Trophy;
 import com.yeepay.payplus.util.PayplusConfig;
@@ -13,9 +14,7 @@ import org.junit.Test;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Marco on 21/12/2016.
@@ -26,7 +25,7 @@ public class Order {
     public void consume() throws Exception {
         OrderConsumeReq orderConsumeReq = new OrderConsumeReq();
 
-        String payTool = "";
+        String payTool = "YEEPAYCASHIER";
         String requestNo = String.valueOf(System.currentTimeMillis());
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -41,21 +40,22 @@ public class Order {
         trxExtraInfo.put("terminalid", "865585020924282");
         trxExtraInfo.put("userip", "123.147.246.146");
 
+        orderConsumeReq.setMerchantNo(PayplusConfig.MERCHANT_NO);
         orderConsumeReq.setRequestNo(requestNo);
-        orderConsumeReq.setMerchantUserId(PayplusConfig.JOEY_TRIBBIANI);
+        orderConsumeReq.setMerchantUserId("Joey");
         orderConsumeReq.setOrderAmount("0.01");
         orderConsumeReq.setFundAmount("0.01");
         orderConsumeReq.setPayTool(payTool);
         orderConsumeReq.setMerchantExpireTime("60");
         orderConsumeReq.setMerchantOrderDate(format.format(new Date()));
-        orderConsumeReq.setWebCallbackUrl("payplus.yeepay.com");
-        orderConsumeReq.setServerCallbackUrl("payplus.yeepay.com");
+        orderConsumeReq.setWebCallbackUrl("http://payplus.yeepay.com");
+        orderConsumeReq.setServerCallbackUrl("http://payplus.yeepay.com");
         orderConsumeReq.setProductCatalog("30");
         orderConsumeReq.setProductName("测试商品");
         orderConsumeReq.setProductDesc("测试商品描述");
         orderConsumeReq.setMcc("3101");
         orderConsumeReq.setIp("8.8.8.8");
-        orderConsumeReq.setOpenId("ogiZrwBxHMFMJP5npHp0WOb84H94");
+        orderConsumeReq.setOpenId("oeo7Kt2nIuI2PU43UBfSgYQw8vqc");
         orderConsumeReq.setTrxExtraInfo(PayplusUtil.convert2JsonString(trxExtraInfo));
 
         Trophy trophy = new PayplusConnector().call(PayplusURI.ORDER_CONSUME, orderConsumeReq);
@@ -70,45 +70,28 @@ public class Order {
     @Test
     public void remit() {
 
-        /**
+        // need prepend http:// OR https:// which matched the Regular Expression
+        String serverCallbackUrl = "http://payplus.yeepay.com";
 
-         RemiteBankDTO:
-         private RemiteTypeEnum remiteType;//打款类型:RATE|AMOUNT--NOT NULL
-         private String bankCode;//银行编码--NOT NULL|LENGTH=64、参考银行编码
-         private String bankName;//银行名字--NOT NULL|LENGTH=128
-         private String branchBankName;//支行名称--非必填
-         private String userName;//卡用户名字--NOT NULL|LENGTH=128
-         private String cardNo;//卡号--NOT NULL|LENGTH=64
-         private String bankAccountType;//对公还是对私pr|pu--NOT NULL
-         private String province;//省编码--NOT NULL|LENGTH=32--参考省市编码
-         private String city;//市编码--NOT NULL|LENGTH=32--参考省市编码
-         private String payeeMobile;//预留手机号--NOT NULL
-         private String leaveWord;//留言--非必填
-         private String value;//值--NOT NULL
+        List<JSONObject> list = new ArrayList<JSONObject>();
+        Map remitInfosMap = new HashMap<String, String>();
 
-         参考样例：
-         [{'cardNo':'*******','bankAccountType':'pr','remiteType':'AMOUNT','leaveWord':'','province':'110000','value':'0.65','userName':'***','bankName':'中国银行','payeeMobile':'***','branchBankName':'','city':'110000','bankCode':'BOC'}]
+        remitInfosMap.put("remiteType", "AMOUNT");
+        remitInfosMap.put("bankCode", "CMB");
+        remitInfosMap.put("bankName", "招商银行");
+        remitInfosMap.put("branchBankName", "");
+        remitInfosMap.put("userName", "杨洋");
+        remitInfosMap.put("cardNo", "6214850107101245");
+        remitInfosMap.put("bankAccountType", "pr");
+        remitInfosMap.put("province", "110000");
+        remitInfosMap.put("city", "110000");
+        remitInfosMap.put("payeeMobile", "18514591959");
+        remitInfosMap.put("leaveWord", "易宝测试");
+        remitInfosMap.put("value", "0.01");
 
-         */
+        list.add(PayplusUtil.convert2Json(remitInfosMap));
 
-        String remitInfos = null;
-
-        Map remitInfosMap =new HashMap<String, String>();
-
-        remitInfosMap.put("remiteType","AMOUNT");
-        remitInfosMap.put("bankCode","CMB");
-        remitInfosMap.put("bankName","招商银行");
-        remitInfosMap.put("branchBankName","");
-        remitInfosMap.put("userName","杨洋");
-        remitInfosMap.put("cardNo","6214850107101245");
-        remitInfosMap.put("bankAccountType","pr");
-        remitInfosMap.put("province","110000");
-        remitInfosMap.put("city","110000");
-        remitInfosMap.put("payeeMobile","18514591959");
-        remitInfosMap.put("leaveWord","易宝测试");
-        remitInfosMap.put("value","0.01");
-
-        MerchantRemitReq merchantRemitReq = new MerchantRemitReq(PayplusUtil.genRequestNo(), "payplus.yeepay.com", PayplusUtil.convert2JsonString(remitInfosMap), "1482465587650");
+        MerchantRemitReq merchantRemitReq = new MerchantRemitReq(PayplusUtil.genRequestNo(), serverCallbackUrl, PayplusUtil.convert2JsonArray(list), "4780428817162709112");
 
         PayplusConnector payplusConnector = new PayplusConnector();
 
@@ -121,7 +104,7 @@ public class Order {
     }
 
     //@Test
-    public void queryRemits(){
+    public void queryRemits() {
 
         MerchantRemitQueryReq merchantRemitQueryReq = new MerchantRemitQueryReq(null, "1482465587650", null);
 

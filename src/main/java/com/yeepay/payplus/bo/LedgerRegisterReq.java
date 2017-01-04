@@ -11,6 +11,7 @@ public class LedgerRegisterReq extends BaseBO {
     public static final String BANKACCOUNTTYPE_PRIVATE_CASH="PRIVATE_CASH";
     public static final String BANKACCOUNTTYPE_PUBLIC_CASH="PUBLIC_CASH";
 
+    private String merchantNo;
     private String province;
     private String city;
     private String customerStyle;
@@ -168,6 +169,14 @@ public class LedgerRegisterReq extends BaseBO {
 
     public String getRiskReserveDay() {
         return riskReserveDay;
+    }
+
+    public String getMerchantNo() {
+        return merchantNo;
+    }
+
+    public void setMerchantNo(String merchantNo) {
+        this.merchantNo = merchantNo;
     }
 
     public void setRiskReserveDay(String riskReserveDay) {

@@ -8,6 +8,7 @@ public class OrderTransferReq extends BaseBO {
     public static final String TRANSFERTYPE_USER_TO_USER = "USER_TO_USER";
     public static final String TRANSFERTYPE_CARD_TO_USER = "CARD_TO_USER";
 
+    private String merchantNo;
     private String transferType;
     private String amount;
     private String fromUserNo;
@@ -17,6 +18,14 @@ public class OrderTransferReq extends BaseBO {
      * required as transferType equals "CARD_TO_USER"
      */
     private String bindCardId;
+
+    public String getMerchantNo() {
+        return merchantNo;
+    }
+
+    public void setMerchantNo(String merchantNo) {
+        this.merchantNo = merchantNo;
+    }
 
     public String getToken() {
         return token;

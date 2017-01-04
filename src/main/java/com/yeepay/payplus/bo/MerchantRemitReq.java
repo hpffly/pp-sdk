@@ -6,14 +6,32 @@ package com.yeepay.payplus.bo;
 public class MerchantRemitReq extends BaseBO{
 
     private String remiteInfos;
+    private String serverCallbackUrl;
+    private String trxRequestNo;
 
     public MerchantRemitReq() {
     }
 
+    public String getServerCallbackUrl() {
+        return serverCallbackUrl;
+    }
+
+    public void setServerCallbackUrl(String serverCallbackUrl) {
+        this.serverCallbackUrl = serverCallbackUrl;
+    }
+
+    public String getTrxRequestNo() {
+        return trxRequestNo;
+    }
+
+    public void setTrxRequestNo(String trxRequestNo) {
+        this.trxRequestNo = trxRequestNo;
+    }
+
     public MerchantRemitReq(String requestNo, String serverCallbackUrl, String remitInfos, String trxRequestNo){
         super.setRequestNo(requestNo);
-        super.setServerCallbackUrl(serverCallbackUrl);
-        super.setTrxRequestNo(trxRequestNo);
+        this.serverCallbackUrl = serverCallbackUrl;
+        this.trxRequestNo = trxRequestNo;
         this.remiteInfos = remitInfos;
     }
 
