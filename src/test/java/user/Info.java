@@ -10,6 +10,9 @@ import com.yeepay.payplus.util.PayplusUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Marco on 21/12/2016.
  */
@@ -19,6 +22,9 @@ public class Info {
 
     @Test
     public void register() {
+
+        Map params =new HashMap <String,String>();
+        params.put("","");
 
         PayplusResp payplusResp = payplusConnector.call(PayplusURI.USER_REGISTER, new UserRegisterReq(null, null, PayplusConfig.RACHEL_GREEN));
 
