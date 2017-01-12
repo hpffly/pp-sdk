@@ -40,6 +40,12 @@ public class PayplusConfig {
      * 测试用户-6
      */
     public static final String RACHEL_GREEN = "Rachel";
+
+    /**
+     * 测试用户-7
+     */
+    public static final String YANGYANG1="yangyang1";
+
     /**
      * appKey
      */
@@ -55,7 +61,7 @@ public class PayplusConfig {
     /**
      * 调用地址
      */
-    public static String URL;
+    public static String ADDRESS;
 
     /**
      * 测试merchantNo
@@ -68,7 +74,7 @@ public class PayplusConfig {
 
         ResourceBundle rb = ResourceBundle.getBundle("cfg");
 
-        URL = rb.getString("URL");
+        ADDRESS = rb.getString("ADDRESS");
         SIGN_ALGORITHM = rb.getString("SIGN_ALGORITHM");
         MODEL = rb.getString("MODEL");
 
@@ -99,7 +105,7 @@ public class PayplusConfig {
 
         ResourceBundle rb = ResourceBundle.getBundle("cfg");
 
-        URL = rb.getString("URL");
+        ADDRESS = rb.getString("URL");
         SIGN_ALGORITHM = rb.getString("SIGN_ALGORITHM");
         MODEL = rb.getString("MODEL");
 

@@ -37,8 +37,9 @@ public class PayplusURI {
 
     /**
      * 1.2.4 转账查询
+     *
+     * @see 2.4.3 转账查询
      */
-    public static final String MERCHANT_TRANSFER_QUERY = "/rest/v1.0/payplus/transfer/merchantQuery";
 
     /**
      * 4.1.7 企业付款

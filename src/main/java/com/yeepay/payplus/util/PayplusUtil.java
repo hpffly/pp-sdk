@@ -2,7 +2,7 @@ package com.yeepay.payplus.util;
 
 import com.yeepay.g3.utils.common.json.JSONArray;
 import com.yeepay.g3.utils.common.json.JSONObject;
-import com.yeepay.payplus.core.entity.Trophy;
+import com.yeepay.payplus.core.entity.PayplusResp;
 import com.yeepay.payplus.exception.QRCodeException;
 import org.apache.log4j.Logger;
 
@@ -149,7 +149,7 @@ public class PayplusUtil {
         return base64FileStr;
     }
 
-    public static void genQRCodeImage(Trophy trophy, String path) {
+    public static void genQRCodeImage(PayplusResp trophy, String path) {
 
         if (trophy == null || trophy.getKeyInfo() == null || "".equals(trophy.getKeyInfo()) || trophy.getKeyInfo().contains("https://")) {
             throw new QRCodeException("\n\nHi buddy, please kindly check: \n 1, The request got correct return. \n 2, The service you called will send you QR code back. \n");

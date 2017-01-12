@@ -8,7 +8,7 @@ import com.yeepay.g3.sdk.yop.error.YopSubError;
 import com.yeepay.g3.utils.common.json.JSONException;
 import com.yeepay.g3.utils.common.json.JSONObject;
 import com.yeepay.payplus.bo.BaseBO;
-import com.yeepay.payplus.core.entity.Trophy;
+import com.yeepay.payplus.core.entity.PayplusResp;
 import com.yeepay.payplus.exception.PayplusConfigException;
 import com.yeepay.payplus.util.PayplusConfig;
 import com.yeepay.payplus.util.PayplusUtil;
@@ -34,7 +34,7 @@ public class PayplusConnector {
     public PayplusConnector(String path) {
         //load pp-sdk configuration depending on value of ENVIRONMENT in config file
         PayplusConfig.init(path);
-        instanceYOPRequest(PayplusConfig.APP_KEY, PayplusConfig.APP_SECRET, PayplusConfig.URL, PayplusConfig.SIGN_ALGORITHM);
+        instanceYOPRequest(PayplusConfig.APP_KEY, PayplusConfig.APP_SECRET, PayplusConfig.ADDRESS, PayplusConfig.SIGN_ALGORITHM);
     }
 
     /**
@@ -44,7 +44,7 @@ public class PayplusConnector {
     public PayplusConnector() {
         //load pp-sdk configuration depending on value of ENVIRONMENT in config file
         PayplusConfig.init();
-        instanceYOPRequest(PayplusConfig.APP_KEY, PayplusConfig.APP_SECRET, PayplusConfig.URL, PayplusConfig.SIGN_ALGORITHM);
+        instanceYOPRequest(PayplusConfig.APP_KEY, PayplusConfig.APP_SECRET, PayplusConfig.ADDRESS, PayplusConfig.SIGN_ALGORITHM);
     }
 
     public PayplusConnector(String appKey,String appSecret) {
@@ -53,7 +53,7 @@ public class PayplusConnector {
         if(!PayplusConfig.MODEL.equals("SELF")){
             throw new PayplusConfigException("DEPRECATED, PLEASE USING THE CONSTRUCTOR WITHOUT PARAMETERS.");
         }
-        instanceYOPRequest(appKey, appSecret, PayplusConfig.URL, PayplusConfig.SIGN_ALGORITHM);
+        instanceYOPRequest(appKey, appSecret, PayplusConfig.ADDRESS, PayplusConfig.SIGN_ALGORITHM);
     }
 
     private void instanceYOPRequest(String appKey, String appSecret, String url, String signAlgorithm) {
@@ -88,9 +88,9 @@ public class PayplusConnector {
         return parameters.toString();
     }
 
-    public Trophy call(String uri, Map<String, String> paras) {
+    public PayplusResp call(String uri, Map<String, String> paras) {
 
-        Trophy trophy = new Trophy();
+        PayplusResp trophy = new PayplusResp();
 
         //set YOPRequest up
         setUpYOPRequest(request, paras);
@@ -128,7 +128,7 @@ public class PayplusConnector {
                 }
 
                 jo.put("subErrors", subErr);
-                trophy.setResponse(jo.toString(2));
+                trophy.setRespInfo(jo.toString(2));
                 trophy.setState(0);
 
             } catch (JSONException e) {
@@ -144,7 +144,7 @@ public class PayplusConnector {
                     trophy.setKeyInfo(String.valueOf(jo.get("redirectUrl")));
                 }
 
-                trophy.setResponse(jo.toString(2));
+                trophy.setRespInfo(jo.toString(2));
                 trophy.setState(1);
 
             } catch (JSONException e) {
@@ -155,7 +155,7 @@ public class PayplusConnector {
         return trophy;
     }
 
-    public Trophy call(String uri, BaseBO bo) {
+    public PayplusResp call(String uri, BaseBO bo) {
         return call(uri, convert2Map(bo));
     }
 

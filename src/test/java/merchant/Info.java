@@ -3,7 +3,7 @@ package merchant;
 import com.yeepay.payplus.bo.LedgerRegisterReq;
 import com.yeepay.payplus.bo.LedgerUploadReq;
 import com.yeepay.payplus.core.PayplusConnector;
-import com.yeepay.payplus.core.entity.Trophy;
+import com.yeepay.payplus.core.entity.PayplusResp;
 import com.yeepay.payplus.util.PayplusConfig;
 import com.yeepay.payplus.util.PayplusURI;
 import com.yeepay.payplus.util.PayplusUtil;
@@ -13,6 +13,8 @@ import org.junit.Test;
  * Created by Marco on 26/12/2016.
  */
 public class Info {
+
+    PayplusConnector payplusConnector = new PayplusConnector();
 
     @Test
     public void ledgerRegister() {
@@ -37,13 +39,12 @@ public class Info {
         ledgerRegisterReq.setBankName("中国建设银行");
         ledgerRegisterReq.setBankCardProvince("北京");
         ledgerRegisterReq.setBankCardCity("北京");
-        ledgerRegisterReq.setRiskReserveDay("1");
-        ledgerRegisterReq.setMinSettleAmount("100");
+        ledgerRegisterReq.setRiskReserveDay("2");
+        ledgerRegisterReq.setMinSettleAmount("20");
 
-        PayplusConnector payplusConnector = new PayplusConnector();
-        Trophy trophy = payplusConnector.call(PayplusURI.LEDGER_REGISTER, ledgerRegisterReq);
+        PayplusResp payplusResp = payplusConnector.call(PayplusURI.LEDGER_REGISTER, ledgerRegisterReq);
 
-        trophy.print();
+        payplusResp.print();
     }
 
     @Test
@@ -53,8 +54,7 @@ public class Info {
 
         LedgerUploadReq ledgerUploadReq = new LedgerUploadReq(null, "BL12345678901716", LedgerUploadReq.QUALIFICATIONTYPE_ID_CARD_FRONT, PayplusUtil.getBase64Stream(img));
 
-        PayplusConnector payplusConnector = new PayplusConnector();
-        Trophy trophy = payplusConnector.call(PayplusURI.LEDGER_UPLOAD, ledgerUploadReq);
-        trophy.print();
+        PayplusResp payplusResp = payplusConnector.call(PayplusURI.LEDGER_UPLOAD, ledgerUploadReq);
+        payplusResp.print();
     }
 }

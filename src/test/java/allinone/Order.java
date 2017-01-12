@@ -5,7 +5,7 @@ import com.yeepay.payplus.bo.MerchantRemitQueryReq;
 import com.yeepay.payplus.bo.MerchantRemitReq;
 import com.yeepay.payplus.bo.OrderConsumeReq;
 import com.yeepay.payplus.core.PayplusConnector;
-import com.yeepay.payplus.core.entity.Trophy;
+import com.yeepay.payplus.core.entity.PayplusResp;
 import com.yeepay.payplus.util.PayplusConfig;
 import com.yeepay.payplus.util.PayplusURI;
 import com.yeepay.payplus.util.PayplusUtil;
@@ -21,11 +21,13 @@ import java.util.*;
  */
 public class Order {
 
+    PayplusConnector payplusConnector = new PayplusConnector();
+
     @Test
     public void consume() throws Exception {
         OrderConsumeReq orderConsumeReq = new OrderConsumeReq();
 
-        String payTool = "YEEPAYCASHIER";
+        String payTool = "SALESB2B";
         String requestNo = String.valueOf(System.currentTimeMillis());
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -58,12 +60,12 @@ public class Order {
         orderConsumeReq.setOpenId("oeo7Kt2nIuI2PU43UBfSgYQw8vqc");
         orderConsumeReq.setTrxExtraInfo(PayplusUtil.convert2JsonString(trxExtraInfo));
 
-        Trophy trophy = new PayplusConnector().call(PayplusURI.ORDER_CONSUME, orderConsumeReq);
+        PayplusResp payplusResp = payplusConnector.call(PayplusURI.ORDER_CONSUME, orderConsumeReq);
 
-        trophy.print();
+        payplusResp.print();
 
         if (payTool.equals("WECHATSCAN") || payTool.equals("ALIPAYSCAN")) {
-            PayplusUtil.genQRCodeImage(trophy, "/Users/edison/Downloads/im.jpg");
+            PayplusUtil.genQRCodeImage(payplusResp, "/Users/edison/Downloads/im.jpg");
         }
     }
 
@@ -93,13 +95,11 @@ public class Order {
 
         MerchantRemitReq merchantRemitReq = new MerchantRemitReq(PayplusUtil.genRequestNo(), serverCallbackUrl, PayplusUtil.convert2JsonArray(list), "4780428817162709112");
 
-        PayplusConnector payplusConnector = new PayplusConnector();
+        PayplusResp payplusResp = payplusConnector.call(PayplusURI.MERCHANT_REMIT, merchantRemitReq);
 
-        Trophy trophy = payplusConnector.call(PayplusURI.MERCHANT_REMIT, merchantRemitReq);
+        payplusResp.print();
 
-        trophy.print();
-
-        Assert.assertEquals(trophy.getState(), 1);
+        Assert.assertEquals(payplusResp.getState(), 1);
 
     }
 
@@ -108,12 +108,10 @@ public class Order {
 
         MerchantRemitQueryReq merchantRemitQueryReq = new MerchantRemitQueryReq(null, "1482465587650", null);
 
-        PayplusConnector payplusConnector = new PayplusConnector();
+        PayplusResp payplusResp = payplusConnector.call(PayplusURI.MERCHANT_REMIT_QUERY, merchantRemitQueryReq);
 
-        Trophy trophy = payplusConnector.call(PayplusURI.MERCHANT_REMIT_QUERY, merchantRemitQueryReq);
+        payplusResp.print();
 
-        trophy.print();
-
-        Assert.assertEquals(trophy.getState(), 1);
+        Assert.assertEquals(payplusResp.getState(), 1);
     }
 }
