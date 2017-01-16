@@ -20,7 +20,7 @@ public class Info {
     @Test
     public void register() {
 
-        PayplusResp payplusResp = payplusConnector.call(PayplusURI.USER_REGISTER, new UserRegisterReq(null, null, PayplusConfig.RACHEL_GREEN));
+        PayplusResp payplusResp = payplusConnector.call(PayplusURI.USER_REGISTER, new UserRegisterReq(PayplusUtil.genRequestNo(), PayplusConfig.MERCHANT_NO, PayplusConfig.ROSS_GELLER));
 
         payplusResp.print();
 

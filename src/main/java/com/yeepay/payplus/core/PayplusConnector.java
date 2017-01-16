@@ -50,7 +50,7 @@ public class PayplusConnector {
     public PayplusConnector(String appKey,String appSecret) {
         PayplusConfig.init();
         //under PRODUCT model, this method cannot be allowed.
-        if(!PayplusConfig.MODEL.equals("SELF")){
+        if(PayplusConfig.MODEL.equals("CUSTOMERS")){
             throw new PayplusConfigException("DEPRECATED, PLEASE USING THE CONSTRUCTOR WITHOUT PARAMETERS.");
         }
         instanceYOPRequest(appKey, appSecret, PayplusConfig.ADDRESS, PayplusConfig.SIGN_ALGORITHM);

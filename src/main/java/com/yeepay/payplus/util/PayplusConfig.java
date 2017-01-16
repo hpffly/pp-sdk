@@ -88,9 +88,16 @@ public class PayplusConfig {
                 throw new PayplusConfigException("PLEASE SET UP A \"payplus.properties\" FOR USING THIS UTILITY.");
             }
 
-            APP_KEY = payplusConfig.getString("APP_KEY");
-            APP_SECRET = payplusConfig.getString("APP_SECRET");
-            MERCHANT_NO = rb.getString("MERCHANT_NO");
+            try {
+                APP_KEY = payplusConfig.getString("APP_KEY");
+                APP_SECRET = payplusConfig.getString("APP_SECRET");
+            }catch (MissingResourceException mre){
+                throw new PayplusConfigException("1 - Please set up APP_KEY and APP_SECRET in payplus.properties.");
+            }
+
+            if (PayplusUtil.isNull(APP_KEY)||PayplusUtil.isNull(APP_SECRET)){
+                throw new PayplusConfigException("2 - Please set up APP_KEY and APP_SECRET in payplus.properties.");
+            }
 
         } else {
 
@@ -121,8 +128,14 @@ public class PayplusConfig {
             e.printStackTrace();
         }
 
-        APP_KEY = payplusConfig.getString("APP_KEY");
-        APP_SECRET = payplusConfig.getString("APP_SECRET");
-        MERCHANT_NO = rb.getString("MERCHANT_NO");
+        try {
+            APP_KEY = payplusConfig.getString("APP_KEY");
+            APP_SECRET = payplusConfig.getString("APP_SECRET");
+        }catch (MissingResourceException mre){
+            throw new PayplusConfigException("1 - Please set up APP_KEY and APP_SECRET in payplus.properties.");
+        }
+        if (PayplusUtil.isNull(APP_KEY)||PayplusUtil.isNull(APP_SECRET)){
+            throw new PayplusConfigException("2 - Please set up APP_KEY and APP_SECRET in payplus.properties.");
+        }
     }
 }
