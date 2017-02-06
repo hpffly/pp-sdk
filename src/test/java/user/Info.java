@@ -10,6 +10,9 @@ import com.yeepay.payplus.util.PayplusUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Marco on 21/12/2016.
  */
@@ -20,7 +23,7 @@ public class Info {
     @Test
     public void register() {
 
-        PayplusResp payplusResp = payplusConnector.call(PayplusURI.USER_REGISTER, new UserRegisterReq(PayplusUtil.genRequestNo(), PayplusConfig.MERCHANT_NO, PayplusConfig.ROSS_GELLER));
+        PayplusResp payplusResp = payplusConnector.call(PayplusURI.USER_REGISTER, new UserRegisterReq(PayplusUtil.genRequestNo(), PayplusConfig.MERCHANT_NO,"pengfei"));
 
         payplusResp.print();
 
@@ -34,7 +37,7 @@ public class Info {
 
         userAuthReq.setRequestNo(PayplusUtil.genRequestNo());
         userAuthReq.setMerchantNo("");
-        userAuthReq.setMerchantUserId(PayplusConfig.YANGYANG1);
+        userAuthReq.setMerchantUserId("123");
         userAuthReq.setWebCallbackUrl("");
         userAuthReq.setReturnUrl("");
 
@@ -43,5 +46,19 @@ public class Info {
         payplusResp.print();
 
         Assert.assertEquals(payplusResp.getState(), 1);
+    }
+
+    @Test
+    public void info(){
+        Map map =new HashMap();
+        map.put("merchantNo",PayplusConfig.MERCHANT_NO);
+        map.put("merchantUserId","lanpay_39-1484960716657");
+
+        PayplusResp payplusResp = payplusConnector.call(PayplusURI.USER_INFO, map);
+
+        payplusResp.print();
+
+        Assert.assertEquals(payplusResp.getState(), 1);
+
     }
 }

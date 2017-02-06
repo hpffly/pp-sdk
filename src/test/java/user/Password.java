@@ -8,6 +8,9 @@ import com.yeepay.payplus.util.PayplusURI;
 import com.yeepay.payplus.util.PayplusUtil;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Marco on 21/12/2016.
  */
@@ -30,4 +33,22 @@ public class Password {
         payplusResp.print();
 
     }
+
+    @Test
+    public void resetAndModify() {
+
+        Map map = new HashMap();
+
+        map.put("requestNo",PayplusUtil.genRequestNo());
+        map.put("merchantNo",PayplusConfig.MERCHANT_NO);
+        map.put("merchantUserId",PayplusConfig.YANGYANG1);
+        map.put("webCallBackUrl","http://payplus.yeepay.com");
+        map.put("returnUrl","http://payplus.yeepay.com");
+
+        PayplusResp payplusResp = payplusConnector.call(PayplusURI.USER_RESETPWD, map);
+
+        payplusResp.print();
+
+    }
 }
+

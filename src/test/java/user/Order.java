@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Created by Marco on 21/12/2016.
  */
-public class Trade {
+public class Order {
 
     PayplusConnector payplusConnector = new PayplusConnector();
 

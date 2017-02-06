@@ -23,7 +23,7 @@ public class Order {
     @Test
     public void balance(){
 
-        PayplusResp payplusResp = payplusConnector.call(PayplusURI.MERCHANT_BALANCE,new MerchantBalanceReq());
+        PayplusResp payplusResp = payplusConnector.call(PayplusURI.MERCHANT_BALANCE,new MerchantBalanceReq("BL12345678901143"));
 
         payplusResp.print();
 

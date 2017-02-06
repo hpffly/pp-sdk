@@ -27,16 +27,16 @@ public class Info {
         ledgerRegisterReq.setCity("北京");
         ledgerRegisterReq.setCustomerStyle(LedgerRegisterReq.CUSTOMERSTYLE_PERSON);
         //ledgerRegisterReq.setBusinessLicence("1024"); // customerStyle 为企业时填写
-        ledgerRegisterReq.setSignedName("刘庆博");
-        ledgerRegisterReq.setIdCard("513922199006050019");
-        ledgerRegisterReq.setLegalPerson("刘庆博");
-        ledgerRegisterReq.setContactor("刘庆博");
-        ledgerRegisterReq.setBindMobile("13550311502");
+        ledgerRegisterReq.setSignedName("杨洋");
+        ledgerRegisterReq.setIdCard("");
+        ledgerRegisterReq.setLegalPerson("杨洋");
+        ledgerRegisterReq.setContactor("杨洋");
+        ledgerRegisterReq.setBindMobile("");
         ledgerRegisterReq.setEmail("yang.yang-1@yeepay.com");
-        ledgerRegisterReq.setBankAccountNumber("6227003813440208029");
-        ledgerRegisterReq.setAccountName("刘庆博");
+        ledgerRegisterReq.setBankAccountNumber("");
+        ledgerRegisterReq.setAccountName("杨洋");
         ledgerRegisterReq.setBankAccountType(LedgerRegisterReq.BANKACCOUNTTYPE_PRIVATE_CASH);
-        ledgerRegisterReq.setBankName("中国建设银行");
+        ledgerRegisterReq.setBankName("招商银行北京分行");
         ledgerRegisterReq.setBankCardProvince("北京");
         ledgerRegisterReq.setBankCardCity("北京");
         ledgerRegisterReq.setRiskReserveDay("2");

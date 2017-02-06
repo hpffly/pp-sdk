@@ -2,7 +2,7 @@
 
 ![yeepay icon](http://www.yeepay.com/images/logo.png)
 
-> PP-SDK是基于[Payplus](http://payplus.yeepay.com)接口封装的开发工具包。她屏蔽了大部分细节、简化了接入流程、同时提供了一些便捷的方法和标准化的参数枚举值。帮助开发者在接入过程中避开一些常见的问题，让开发者快速接入[Payplus](http://payplus.yeepay.com)的服务。  
+> PP-SDK是基于[Payplus](http://payplus.yeepay.com)接口封装的开发工具包。她屏蔽了大部分细节、简化了接入流程、同时提供了一些便捷的方法和标准化的参数枚举值。帮助开发者在接入过程中避开一些常见的问题，让开发者快速接入[Payplus](http://payplus.yeepay.com)的服务。
 
 > *注: 该开发工具包仅支持Java语言，其他语言开发者可以参照Payplus的官方文档。*
 
@@ -11,39 +11,49 @@
 > *PayplusConnector 是一个核心类可以帮助我们接入Payplus核心系统。  
 > 从此，你不再需要关注接口协议、加密方法、测试数据等等...*
 
-#### 测试阶段，快速接入。
+### 准备工作
+
+1. 在pom.xml里添加依赖
+
+   ```xml
+   <dependency>
+       <groupId>com.yeepay</groupId>
+       <artifactId>pp-sdk</artifactId>
+       <version>1.0</version>
+   </dependency>
+   ```
+
+2. 下载[依赖的包](http://payplus.yeepay.com)，并把他们添加到你的环境变量
+
+3. 创建payplus.properties文件，内容如下：
+
+```properties
+#测试阶段可留空，入网之后更新为正式APP_KEY和APP_SECRET
+APP_KEY=
+APP_SECRET=
+```
+
+### 测试
 
 1. 测试阶段所有接口文档中涉及 merchantNo 都不必传参
-2. 如不传 requestNo 将使用系统自带的UUID生成对应的请求编号
+2. 传递一个具有唯一性的requestNo
+> 不传 requestNo 将使用系统自带的UUID生成对应的请求编号
 
 ```java
 //pp-sdk核心类
 PayplusConnector payplusConnector =new PayplusConnector();
 
-UserRegisterReq userRegisterReq =new UserRegisterReq();
-
-userRegisterReq.setRequestNo(null);
-userRegisterReq.setMerchantNo(null);
-userRegisterReq.setMerchantUserId("Joey");
-
-/**
-
-当然，你也可以使用JDK自带的Map来封装参数，调用我们的服务
-
 Map<String, String> params = new HashMap<String, String>();
 
-params.put("requestNo", null);
-params.put("merchantNo", null);
+//使用系统工具生成具有唯一性的requstNo
+params.put("requestNo", PayplusUtil.genRequestNo());
 params.put("merchantUserId", "Joey");
 
-**/
-
 //所有的hessian服务地址都封装在PayplusURI里
-Torphy trophy = payplusConnector.call(PayplusURI.USER_REGISTER, userRegisterReq);
+PayplusResp payplusResp = payplusConnector.call(PayplusURI.USER_REGISTER, userRegisterReq);
 
 //打印结果
-trophy.print();
-
+payplusResp.print();
 ```
 
 >*你可能注意到了，我们在实例化变量registerReq的时候，将requestNo和merchantNo赋值为null, 这是因为底层封装了默认的测试数据，这将有利于我们快速了解Payplus的核心业务，而不需要关注测试参数等细节。*

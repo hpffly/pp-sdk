@@ -27,7 +27,7 @@ public class Order {
     public void consume() throws Exception {
         OrderConsumeReq orderConsumeReq = new OrderConsumeReq();
 
-        String payTool = "SALESB2B";
+        String payTool = "WECHATOFFICIAL"; //WECHATOFFICIAL
         String requestNo = String.valueOf(System.currentTimeMillis());
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -44,7 +44,7 @@ public class Order {
 
         orderConsumeReq.setMerchantNo(PayplusConfig.MERCHANT_NO);
         orderConsumeReq.setRequestNo(requestNo);
-        orderConsumeReq.setMerchantUserId("Joey");
+        orderConsumeReq.setMerchantUserId(PayplusConfig.YANGYANG1);
         orderConsumeReq.setOrderAmount("0.01");
         orderConsumeReq.setFundAmount("0.01");
         orderConsumeReq.setPayTool(payTool);
@@ -55,7 +55,7 @@ public class Order {
         orderConsumeReq.setProductCatalog("30");
         orderConsumeReq.setProductName("测试商品");
         orderConsumeReq.setProductDesc("测试商品描述");
-        orderConsumeReq.setMcc("3101");
+        orderConsumeReq.setMcc("4511");
         orderConsumeReq.setIp("8.8.8.8");
         orderConsumeReq.setOpenId("oeo7Kt2nIuI2PU43UBfSgYQw8vqc");
         orderConsumeReq.setTrxExtraInfo(PayplusUtil.convert2JsonString(trxExtraInfo));
