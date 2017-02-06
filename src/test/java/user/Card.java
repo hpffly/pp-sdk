@@ -39,7 +39,7 @@ public class Card {
     @Test
     public void unBindCard() {
 
-        String bindId = "53965327";
+        String bindId = "539653271";
         String token = "e4770b6982994922bff16fd76c85cf72";
         String requestNo = "0cbb8f087bea4df5bddb010d2b66b8db";
 
