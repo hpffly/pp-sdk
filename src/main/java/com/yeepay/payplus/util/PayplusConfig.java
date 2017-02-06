@@ -44,7 +44,7 @@ public class PayplusConfig {
     /**
      * 测试用户-7
      */
-    public static final String YANGYANG1="yangyang1";
+    public static final String YANGYANG1 = "yangyang1";
 
     /**
      * appKey
@@ -70,6 +70,8 @@ public class PayplusConfig {
 
     public static String MODEL;
 
+    public static String MODEL_CUSTOMERS;
+
     public static void init() {
 
         ResourceBundle rb = ResourceBundle.getBundle("cfg");
@@ -88,15 +90,27 @@ public class PayplusConfig {
                 throw new PayplusConfigException("PLEASE SET UP A \"payplus.properties\" FOR USING THIS UTILITY.");
             }
 
-            try {
-                APP_KEY = payplusConfig.getString("APP_KEY");
-                APP_SECRET = payplusConfig.getString("APP_SECRET");
-            }catch (MissingResourceException mre){
-                throw new PayplusConfigException("1 - Please set up APP_KEY and APP_SECRET in payplus.properties.");
-            }
+            MODEL_CUSTOMERS = payplusConfig.getString("MODEL");
 
-            if (PayplusUtil.isNull(APP_KEY)||PayplusUtil.isNull(APP_SECRET)){
-                throw new PayplusConfigException("2 - Please set up APP_KEY and APP_SECRET in payplus.properties.");
+            // using defaul configuration if MODEL_CUSTOMERS's value equals "TEST"
+            if (MODEL_CUSTOMERS.equals("TEST")) {
+
+                APP_KEY = rb.getString("APP_KEY");
+                APP_SECRET = rb.getString("APP_SECRET");
+                MERCHANT_NO = rb.getString("MERCHANT_NO");
+
+            } else if (PayplusUtil.isNull(MODEL_CUSTOMERS) || MODEL_CUSTOMERS.equals("DEVELOPMENT")) {
+
+                try {
+                    APP_KEY = payplusConfig.getString("APP_KEY");
+                    APP_SECRET = payplusConfig.getString("APP_SECRET");
+                } catch (MissingResourceException mre) {
+                    throw new PayplusConfigException("1 - Please set up APP_KEY and APP_SECRET in payplus.properties.");
+                }
+
+                if (PayplusUtil.isNull(APP_KEY) || PayplusUtil.isNull(APP_SECRET)) {
+                    throw new PayplusConfigException("2 - Please set up APP_KEY and APP_SECRET in payplus.properties.");
+                }
             }
 
         } else {
@@ -122,7 +136,7 @@ public class PayplusConfig {
         try {
             InputStream in = new BufferedInputStream(new FileInputStream(path));
             payplusConfig = new PropertyResourceBundle(in);
-        }catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             throw new PayplusConfigException("CANNOT FIND A \"PAYPLUS.PROPERTIES\" THROUGH CHECK THE PATH PROVIDED.");
         } catch (IOException e) {
             e.printStackTrace();
@@ -131,10 +145,10 @@ public class PayplusConfig {
         try {
             APP_KEY = payplusConfig.getString("APP_KEY");
             APP_SECRET = payplusConfig.getString("APP_SECRET");
-        }catch (MissingResourceException mre){
+        } catch (MissingResourceException mre) {
             throw new PayplusConfigException("1 - Please set up APP_KEY and APP_SECRET in payplus.properties.");
         }
-        if (PayplusUtil.isNull(APP_KEY)||PayplusUtil.isNull(APP_SECRET)){
+        if (PayplusUtil.isNull(APP_KEY) || PayplusUtil.isNull(APP_SECRET)) {
             throw new PayplusConfigException("2 - Please set up APP_KEY and APP_SECRET in payplus.properties.");
         }
     }

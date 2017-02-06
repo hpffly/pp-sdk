@@ -194,7 +194,7 @@ public class PayplusConnector {
     private void insertDefaultParameters(Map<String, String> paraMap) {
 
         // if currently under PRODUCT environment, all required parameters is required,skipping this step
-        if (PayplusConfig.MODEL.endsWith("CUSTOMERS")) {
+        if (PayplusConfig.MODEL.equals("CUSTOMERS")) {
             return;
         }
 

@@ -1,7 +1,5 @@
 # PP-SDK In Action
 
-![yeepay icon](http://www.yeepay.com/images/logo.png)
-
 > PP-SDK是基于[Payplus](http://payplus.yeepay.com)接口封装的开发工具包。她屏蔽了大部分细节、简化了接入流程、同时提供了一些便捷的方法和标准化的参数枚举值。帮助开发者在接入过程中避开一些常见的问题，让开发者快速接入[Payplus](http://payplus.yeepay.com)的服务。
 
 > *注: 该开发工具包仅支持Java语言，其他语言开发者可以参照Payplus的官方文档。*
@@ -13,7 +11,7 @@
 
 ### 准备工作
 
-1. 在pom.xml里添加依赖
+1. 在pom.xml里添加依赖，并将所有的依赖包添加到开发的环境变量中。
 
    ```xml
    <dependency>
@@ -23,21 +21,24 @@
    </dependency>
    ```
 
-2. 下载[依赖的包](http://payplus.yeepay.com)，并把他们添加到你的环境变量
+2. 创建payplus.properties文件，内容如下：
 
-3. 创建payplus.properties文件，内容如下：
+> 测试阶段：MODEL可置为"TEST"，除非你想使用正式商编和密钥进行测试。  
+> 发布生产：请务必填写APP_KEY和APP_SECRET，并且将MODEL置为"DEVELOPMENT"
 
 ```properties
-#测试阶段可留空，入网之后更新为正式APP_KEY和APP_SECRET
+# Both are Required, if the value of MODEL does not equal "TEST"
 APP_KEY=
 APP_SECRET=
+
+# Please set this element to "TEST", if you do not have a specified pair of APP_KEY and APP_SECRET.
+# Otherwise, you merely want to run your application under TEST environment.
+MODEL=TEST
 ```
 
-### 测试
+### DEMO
 
-1. 测试阶段所有接口文档中涉及 merchantNo 都不必传参
-2. 传递一个具有唯一性的requestNo
-> 不传 requestNo 将使用系统自带的UUID生成对应的请求编号
+下面我们使用Java作为开发语言，对接[Payplus](http://payplus.yeepay.com)的用户注册接口。
 
 ```java
 //pp-sdk核心类
@@ -49,87 +50,51 @@ Map<String, String> params = new HashMap<String, String>();
 params.put("requestNo", PayplusUtil.genRequestNo());
 params.put("merchantUserId", "Joey");
 
-//所有的hessian服务地址都封装在PayplusURI里
-PayplusResp payplusResp = payplusConnector.call(PayplusURI.USER_REGISTER, userRegisterReq);
+//call方法包含2个参数：常量URI和入参
+PayplusResp payplusResp = payplusConnector.call(PayplusURI.USER_REGISTER, param);
 
 //打印结果
 payplusResp.print();
 ```
 
->*你可能注意到了，我们在实例化变量registerReq的时候，将requestNo和merchantNo赋值为null, 这是因为底层封装了默认的测试数据，这将有利于我们快速了解Payplus的核心业务，而不需要关注测试参数等细节。*
-
->*注1：当然你也可以完全不传这两个变量，这里赋值null是为了不给用户造成误导，因为这两个参数是确实存在的。*
-
->*注2：所有接口列表中入参小于等于五个的接口，都会提供严格依照文档参数顺序的构造函数，以便快速构建代码。*
-
-#### 正式商用，你可以完善商编和密钥等信息，让这套支付系统完完全全的为你服务。
+### 发布生产
 
 > 申请使用这套支付系统：*<ppsupport@yeepay.com>*
 
-```java
+需要修改payplus.properties, 填写APP_KEY和APP_SECRET, 并将MODEL置为DEVELOPMENT.
 
-/**
- * 商户的用户名密码：appKey & appSecret
- */
-String appKey = "";
-String appSecret = "";
+```properties
+# Both are Required, if the value of MODEL does not equal "TEST"
+APP_KEY=
+APP_SECRET=
 
-PayplusConnector payplusConnector = new PayplusConnector(appKey, appSecret);
-
-//实例化一个注册对象
-UserRegisterReq userRegisterReq = new UserRegisterReq();
-userRegisterReq.setMerchantUserId("Joey");
-
-//调用
-payplusConnector.call(PayplusURI.USER_REGISTER, userRegisterReq);
-
-```
-
-#### 一行代码接入[Payplus](http://payplus.yeepay.com)服务
-> 这已经是一个极简的调用了，当然我们还能再做一些减法。
-
-```java
-
-new PayplusConnector().call(PayplusURI.USER_REGISTER, new UserRegisterReq(null, null, "Joey")).print();
-
+# Please set this element to "TEST", if you do not have a specified pair of APP_KEY and APP_SECRET.
+# Otherwise, you merely want to run your application under TEST environment.
+MODEL=DEVELOPMENT
 ```
 
 ## 二、接入指南
 
-#### 请求参数
+### 请求参数
 
-目前，我们提供了BO和Map两种方式来进行参数传递。
-
-> *推荐使用 BO（Business Object）来定义参数，至少BO内部提供了一些枚举值可以让你的程序更健壮。*  
-> *当然你也可以继承父类 BaseBO 去开发属于你自己的业务实体Bean。*
+> 目前，我们采用Map方式来进行参数传递。
 
 ```java
-
-UserRegisterReq userRegisterReq =new UserRegisterReq();
-
-userRegisterReq.setRequestNo(null);
-userRegisterReq.setMerchantNo(null);
-userRegisterReq.setMerchantUserId("Joey");
-
-/**
 
 Map<String, String> params = new HashMap<String, String>();
 
-params.put("requestNo", null);
-params.put("merchantNo", null);
+params.put("requestNo", PayplusUtil.genRequestNo());
+params.put("merchantNo", "BM12345678901221");
 params.put("merchantUserId", "Joey");
-
-**/
 
 ```
 
-#### 响应参数
+### 响应参数
 
-服务返回的对象*Trophy* 整合了一些工具方法和一些便捷的变量访问
-> KeyInfo 这个变量可以让你更便捷地使用我们的服务。
+> 服务返回的对象*PayplusResp* 整合了一些工具方法和一些便捷的变量访问
 
 ```java
-public class Trophy {
+public class PayplusResp {
     /**
      * 1.在某些接口中, 可能是H5页面链接
      * 2.另外一些接口, 二维码字节码
@@ -144,7 +109,10 @@ public class Trophy {
     /**
      * 响应实体, JSON串
      */
-    private String response;
+    private String respInfo;
+
+    //for 3.2.1 sendRedPacket
+    private String activeNo;
 
     //生成二维码图片
     public void genQRCodeImage(String path){
@@ -158,7 +126,7 @@ public class Trophy {
 }
 ```
 
-#### 一些细节
+### 一些细节
 
 > *PayplusUtil* 提供了若干个工具方法，提供给懒惰的人，对垒代码有莫名热忱的攻城狮请绕行...  
 
@@ -173,7 +141,7 @@ public class Trophy {
 String requestNo = PayplusUtil.genRequestNo();
 ```
 
-* 使用符合[Payplus](http://payplus.yeepay.com)要求的标准时间格式
+* 使用符合[Payplus](http://payplus.yeepay.com)标准的时间格式
 
 ```java
 String formattedDateString = PayplusUtil.getFormatDateString(new Date());
@@ -201,7 +169,7 @@ Boolean flag = PayplusUtil.isNull(obj);
 
 * 常量URI  
 
->*PayplusURI* 定义了全部可调用的服务，详参[接口对照表](https://github.com/sharq34/pp-sdk/blob/master/%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3%E5%92%8CPayplusURI%E5%AF%B9%E7%85%A7%E8%A1%A8.xlsx)。
+>*PayplusURI* 定义了全部可调用的服务。
 
 ```java
 public class PayplusURI {
@@ -217,22 +185,4 @@ public class PayplusURI {
 
 }
 
-```
-
-* 业务枚举值  
-
-> BO（Business Object）如 *UserVerifyPWDReq* 定义了一些变量的枚举值。
-
-```java
-public class UserVerifyPWDReq extends BaseBO {
-
-    /**
-     * tokenBizType 枚举值
-     */
-     public static final String TOKENBIZTYPE_TRANSFER = "ORDER_TRANSFER";
-     public static final String TOKENBIZTYPE_WITHDRAW = "WITHDRAW";
-     public static final String TOKENBIZTYPE_UN_BIND_CARD = "UN_BIND_CARD";
-
-    //其他变量及set&get方法
-}
 ```
