@@ -44,12 +44,12 @@ public class PayplusURI {
     /**
      * 4.1.7 企业付款
      */
-    public static final String MERCHANT_REMIT = "/rest/v1.0/payplus/remite/remite";
+    public static final String MERCHANT_REMIT = "/rest/v1.0/payplus/remit/remit";
 
     /**
      * 4.1.8 企业付款查询
      */
-    public static final String MERCHANT_REMIT_QUERY = "/rest/v1.0/payplus/remite/query";
+    public static final String MERCHANT_REMIT_QUERY = "/rest/v1.0/payplus/remit/query";
 
     /**
      * 2.1.1 用户注册

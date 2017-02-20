@@ -92,7 +92,7 @@ public class PayplusConfig {
 
             MODEL_CUSTOMERS = payplusConfig.getString("MODEL");
 
-            // using defaul configuration if MODEL_CUSTOMERS's value equals "TEST"
+            // using default configuration if MODEL_CUSTOMERS's value equals "TEST"
             if (MODEL_CUSTOMERS.equals("TEST")) {
 
                 APP_KEY = rb.getString("APP_KEY");
