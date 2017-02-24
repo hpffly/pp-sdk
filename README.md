@@ -35,7 +35,7 @@
 
 2. 创建payplus.properties文件，内容如下：
 
-> 测试阶段：MODEL可置为"TEST"，系统将使用默认配置进行测试。 
+> 测试阶段：MODEL可置为"TEST"，系统将使用默认配置进行测试。  
 > 发布生产：请务必填写APP_KEY和APP_SECRET，并且将MODEL置为"PRODUCTION"
 
 ```properties
