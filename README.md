@@ -14,17 +14,29 @@
 1. 在pom.xml里添加依赖，并将所有的依赖包添加到开发的环境变量中。
 
    ```xml
-   <dependency>
-       <groupId>com.yeepay</groupId>
-       <artifactId>pp-sdk</artifactId>
-       <version>1.0</version>
-   </dependency>
+    <dependencies>
+        <dependency>
+            <groupId>com.yeepay</groupId>
+            <artifactId>pp-sdk</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.3</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.10</version>
+        </dependency>
+    </dependencies>
    ```
 
 2. 创建payplus.properties文件，内容如下：
 
-> 测试阶段：MODEL可置为"TEST"，除非你想使用正式商编和密钥进行测试。  
-> 发布生产：请务必填写APP_KEY和APP_SECRET，并且将MODEL置为"DEVELOPMENT"
+> 测试阶段：MODEL可置为"TEST"，系统将使用默认配置进行测试。 
+> 发布生产：请务必填写APP_KEY和APP_SECRET，并且将MODEL置为"PRODUCTION"
 
 ```properties
 # Both are Required, if the value of MODEL does not equal "TEST"
@@ -32,7 +44,7 @@ APP_KEY=
 APP_SECRET=
 
 # Please set this element to "TEST", if you do not have a specified pair of APP_KEY and APP_SECRET.
-# Otherwise, you merely want to run your application under TEST environment.
+# Otherwise, the element should be set to "PRODUCTION" if you decide to let your application to be published.
 MODEL=TEST
 ```
 
