@@ -208,9 +208,5 @@ public class PayplusURI {
      */
     public static final String ORDER_DIVIDE_QUERY = "/rest/v1.0/payplus/divide/query";
 
-    /**
-     * 5.1.1 手续费查询
-     */
-    public static final String ACCOUNTING_FEE = "/rest/v1.0/payplus/accounting/queryFee";
 }
 
