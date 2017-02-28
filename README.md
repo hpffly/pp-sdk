@@ -118,12 +118,12 @@ payplusResp.print();
 ```
 
 Console打印日志为：
-> [Request of Payplus] 和 [Reponse of Payplus] 分别为接口调用的请求响应参数  
+> Request of Payplus 和 Reponse of Payplus 分别请求和响应参数  
 
-```
+```json
 [Request of Payplus]
 service: user/register
-merchantUserId: JOEY12345
+merchantUserId: Joey
 requestNo: 9a90660604524e4e89ab1f51eabc5127
 
 [Reponse of Payplus]
