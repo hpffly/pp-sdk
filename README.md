@@ -206,7 +206,7 @@ public class PayplusResp {
 
 ### 一些细节
 
-> *PayplusUtil* 提供了若干个工具方法，提供给懒惰的人，对垒代码有莫名热忱的攻城狮请绕行...  
+> *PayplusUtil* 提供了若干个工具方法，提供给"懒惰"的人，对垒代码有莫名热忱的攻城狮请绕行...  
 
 * 自动生成requestNo
 
