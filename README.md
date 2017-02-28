@@ -117,6 +117,23 @@ PayplusResp payplusResp = payplusConnector.call(PayplusURI.USER_REGISTER, param)
 payplusResp.print();
 ```
 
+Console打印日志为：
+> [Request of Payplus] 和 [Reponse of Payplus] 分别为接口调用的请求响应参数
+```
+[Request of Payplus]
+service: user/register
+merchantUserId: JOEY12345
+requestNo: 9a90660604524e4e89ab1f51eabc5127
+
+[Reponse of Payplus]
+requestNo: 9a90660604524e4e89ab1f51eabc5127
+{
+  "memberNo": "C211234567901952",
+  "code": "1",
+  "message": "success"
+}
+```
+
 ### 发布生产
 
 > 申请使用这套支付系统：*<ppsupport@yeepay.com>*
