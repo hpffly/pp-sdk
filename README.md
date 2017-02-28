@@ -118,7 +118,7 @@ payplusResp.print();
 ```
 
 Console打印日志为：
-> Request of Payplus 和 Reponse of Payplus 分别请求和响应参数  
+> [Request of Payplus] 和 [Reponse of Payplus] 分别请求和响应参数  
 
 ```
 [Request of Payplus]
