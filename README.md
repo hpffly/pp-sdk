@@ -19,7 +19,7 @@
             <groupId>com.yeepay</groupId>
             <artifactId>pp-sdk</artifactId>
             <version>1.2</version>
-            <classify>allinone</classify>
+            <classifier>allinone</classifier>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
