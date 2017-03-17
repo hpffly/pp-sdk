@@ -23,10 +23,10 @@ public class PayplusUtil {
     private static Logger logger = Logger.getLogger(PayplusUtil.class);
 
     /**
-     * TODO 显示相关文档、函数说明
+     * 如果用户不填写, 那么自动生成一个RequestNo, 与业务关联。
      *
      * @return
-     * @description 如果用户不填写, 那么自动生成一个RequestNo, 与业务关联。
+     *
      */
     public static String genRequestNo() {
         String uuid = UUID.randomUUID().toString();

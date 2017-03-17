@@ -43,15 +43,16 @@ public class PayplusConnector {
      */
     public PayplusConnector() {
         //load pp-sdk configuration depending on value of ENVIRONMENT in config file
-        PayplusConfig.init();
+        PayplusConfig.init(null);
         instanceYOPRequest(PayplusConfig.APP_KEY, PayplusConfig.APP_SECRET, PayplusConfig.ADDRESS, PayplusConfig.SIGN_ALGORITHM);
     }
 
+    // express constructor for SELF test, and the value of MODEL in cfg.properties should be SELF.
     public PayplusConnector(String appKey,String appSecret) {
-        PayplusConfig.init();
+        PayplusConfig.init(null);
         //under PRODUCT model, this method cannot be allowed.
         if(PayplusConfig.MODEL.equals("CUSTOMERS")){
-            throw new PayplusConfigException("DEPRECATED, PLEASE USING THE CONSTRUCTOR WITHOUT PARAMETERS.");
+            throw new PayplusConfigException("DEPRECATED, PLEASE USING THE CONSTRUCTOR WITHOUT PARAMETERS OR WITHIN A PATH PARAMETER.");
         }
         instanceYOPRequest(appKey, appSecret, PayplusConfig.ADDRESS, PayplusConfig.SIGN_ALGORITHM);
     }
@@ -70,8 +71,8 @@ public class PayplusConnector {
         Set keys = paras.keySet();
         StringBuilder parameters = new StringBuilder("\n[Request of Payplus]\n");
 
+        //assemble formatted output of URI
         uri = uri.substring(uri.indexOf("payplus") + 8);
-
         parameters.append("service: " + uri + "\n");
 
         Iterator it = keys.iterator();
@@ -90,16 +91,16 @@ public class PayplusConnector {
 
     public PayplusResp call(String uri, Map<String, String> paras) {
 
-        PayplusResp trophy = new PayplusResp();
+        PayplusResp payplusResp = new PayplusResp();
 
         //set YOPRequest up
         setUpYOPRequest(request, paras);
 
         //equip requestNo, activeNo with Trophy object for users' convenience
         if (paras.containsKey("requestNo"))
-            trophy.setRequestNo(paras.get("requestNo"));
+            payplusResp.setRequestNo(paras.get("requestNo"));
         else if (paras.containsKey("activeNo"))
-            trophy.setActiveNo(paras.get("activeNo"));
+            payplusResp.setActiveNo(paras.get("activeNo"));
 
         logger.debug(formattedRequestParameters(paras, uri));
 
@@ -128,8 +129,8 @@ public class PayplusConnector {
                 }
 
                 jo.put("subErrors", subErr);
-                trophy.setRespInfo(jo.toString(2));
-                trophy.setState(0);
+                payplusResp.setRespInfo(jo.toString(2));
+                payplusResp.setState(0);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -141,18 +142,18 @@ public class PayplusConnector {
                 jo = new JSONObject(resp.getStringResult());
 
                 if (jo.has("redirectUrl")) {
-                    trophy.setKeyInfo(String.valueOf(jo.get("redirectUrl")));
+                    payplusResp.setKeyInfo(String.valueOf(jo.get("redirectUrl")));
                 }
 
-                trophy.setRespInfo(jo.toString(2));
-                trophy.setState(1);
+                payplusResp.setRespInfo(jo.toString(2));
+                payplusResp.setState(1);
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        return trophy;
+        return payplusResp;
     }
 
     public PayplusResp call(String uri, BaseBO bo) {

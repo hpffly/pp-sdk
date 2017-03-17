@@ -16,6 +16,12 @@
    ```xml
     <dependencies>
         <dependency>
+            <groupId>com.yeepay</groupId>
+            <artifactId>pp-sdk</artifactId>
+            <version>1.2</version>
+            <classify>allinone</classify>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
@@ -79,12 +85,10 @@
     </dependencies>
    ```
 
-2. 添加钱麦依赖包到项目开发环境。附：[下载地址](https://github.com/sharq34/pp-sdk/blob/master/JARs.zip)
+2. 在开发环境中创建payplus.properties文件，内容如下：
 
-3. 在开发环境中创建payplus.properties文件，内容如下：
-
-> 测试阶段：MODEL可置为"TEST"，系统将使用默认配置进行测试。  
-> 发布生产：请务必填写APP_KEY和APP_SECRET，并且将MODEL置为"PRODUCTION"
+> 测试阶段：MODEL置为"TEST"，系统将使用默认配置进行测试，无须关心测试账号等信息。  
+> 发布生产：MODEL置为"PRODUCTION"，须配置APP_KEY和APP_SECRET。
 
 ```properties
 # Both are Required, if the value of MODEL does not equal "TEST"
@@ -102,7 +106,10 @@ MODEL=TEST
 
 ```java
 //pp-sdk核心类
-PayplusConnector payplusConnector =new PayplusConnector();
+PayplusConnector payplusConnector = new PayplusConnector();
+
+//你也只可以指定payplus.properties文件的绝对或者相对路径
+//PayplusConnector payplusConnector = new PayplusConnector("<绝对、相对路径>");
 
 Map<String, String> params = new HashMap<String, String>();
 
@@ -139,7 +146,7 @@ requestNo: 9a90660604524e4e89ab1f51eabc5127
 
 > 申请使用这套支付系统：*<ppsupport@yeepay.com>*
 
-需要修改payplus.properties, 填写APP_KEY和APP_SECRET, 并将MODEL置为DEVELOPMENT.
+需要修改payplus.properties, 填写APP_KEY和APP_SECRET, 并将MODEL置为PRODUCTION.
 
 ```properties
 # Both are Required, if the value of MODEL does not equal "TEST"
@@ -147,8 +154,8 @@ APP_KEY=
 APP_SECRET=
 
 # Please set this element to "TEST", if you do not have a specified pair of APP_KEY and APP_SECRET.
-# Otherwise, you merely want to run your application under TEST environment.
-MODEL=DEVELOPMENT
+# Otherwise, the element should be set to "PRODUCTION" if you decide to let your application to be published.
+MODEL=PRODUCTION
 ```
 
 ## 二、接入指南
@@ -169,7 +176,7 @@ params.put("merchantUserId", "Joey");
 
 ### 响应参数
 
-> 服务返回的对象*PayplusResp* 整合了一些工具方法和一些便捷的变量访问
+> 服务返回*PayplusResp*对象 包含的属性和对应的方法如下：
 
 ```java
 public class PayplusResp {
@@ -206,15 +213,15 @@ public class PayplusResp {
 
 ### 一些细节
 
-> *PayplusUtil* 提供了若干个工具方法，提供给"懒惰"的人，对垒代码有莫名热忱的攻城狮请绕行...  
+> *PayplusUtil* 提供了若干个工具方法
 
 * 自动生成requestNo
 
 ```java
 /**
  * 基于JDK自带的UUID生成。
- * 当然，这个requestNo会作为返回参数封装在Trophy对象里。
- * 可以通过调用 trophy.getRequestNo() 获取。
+ * 当然，这个requestNo会作为返回参数封装在PayplusResp对象里。
+ * 可以通过调用 payplusResp.getRequestNo() 获取。
  */
 String requestNo = PayplusUtil.genRequestNo();
 ```

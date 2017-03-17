@@ -72,64 +72,19 @@ public class PayplusConfig {
 
     public static String MODEL_CUSTOMERS;
 
-    public static void init() {
+    private static ResourceBundle getResourceOBJ() {
 
-        ResourceBundle rb = ResourceBundle.getBundle("cfg");
+        ResourceBundle payplusConfig = null;
 
-        ADDRESS = rb.getString("ADDRESS");
-        SIGN_ALGORITHM = rb.getString("SIGN_ALGORITHM");
-        MODEL = rb.getString("MODEL");
-
-        if (MODEL.equals("CUSTOMERS")) {
-            //loading customers' configuration
-            ResourceBundle payplusConfig = null;
-
-            try {
-                payplusConfig = ResourceBundle.getBundle("payplus");
-            } catch (MissingResourceException mre) {
-                throw new PayplusConfigException("PLEASE SET UP A \"payplus.properties\" FOR USING THIS UTILITY.");
-            }
-
-            MODEL_CUSTOMERS = payplusConfig.getString("MODEL");
-
-            // using default configuration if MODEL_CUSTOMERS's value equals "TEST"
-            if (MODEL_CUSTOMERS.equals("TEST")) {
-
-                APP_KEY = rb.getString("APP_KEY");
-                APP_SECRET = rb.getString("APP_SECRET");
-                MERCHANT_NO = rb.getString("MERCHANT_NO");
-
-            } else if (PayplusUtil.isNull(MODEL_CUSTOMERS) || MODEL_CUSTOMERS.equals("DEVELOPMENT")) {
-
-                try {
-                    APP_KEY = payplusConfig.getString("APP_KEY");
-                    APP_SECRET = payplusConfig.getString("APP_SECRET");
-                } catch (MissingResourceException mre) {
-                    throw new PayplusConfigException("1 - Please set up APP_KEY and APP_SECRET in payplus.properties.");
-                }
-
-                if (PayplusUtil.isNull(APP_KEY) || PayplusUtil.isNull(APP_SECRET)) {
-                    throw new PayplusConfigException("2 - Please set up APP_KEY and APP_SECRET in payplus.properties.");
-                }
-            }
-
-        } else {
-
-            // using default value for test environment corresponding with 'SELF' value of model
-            APP_KEY = rb.getString("APP_KEY");
-            APP_SECRET = rb.getString("APP_SECRET");
-            MERCHANT_NO = rb.getString("MERCHANT_NO");
+        try {
+            payplusConfig = ResourceBundle.getBundle("payplus");
+        } catch (MissingResourceException mre) {
+            throw new PayplusConfigException("PLEASE SET UP A \"payplus.properties\" FOR USING THIS UTILITY.");
         }
+        return payplusConfig;
     }
 
-    public static void init(String path) {
-
-        ResourceBundle rb = ResourceBundle.getBundle("cfg");
-
-        ADDRESS = rb.getString("URL");
-        SIGN_ALGORITHM = rb.getString("SIGN_ALGORITHM");
-        MODEL = rb.getString("MODEL");
-
+    private static ResourceBundle getResourceOBJ(String path) {
         //loading customers' configuration
         ResourceBundle payplusConfig = null;
 
@@ -142,14 +97,58 @@ public class PayplusConfig {
             e.printStackTrace();
         }
 
-        try {
-            APP_KEY = payplusConfig.getString("APP_KEY");
-            APP_SECRET = payplusConfig.getString("APP_SECRET");
-        } catch (MissingResourceException mre) {
-            throw new PayplusConfigException("1 - Please set up APP_KEY and APP_SECRET in payplus.properties.");
-        }
-        if (PayplusUtil.isNull(APP_KEY) || PayplusUtil.isNull(APP_SECRET)) {
-            throw new PayplusConfigException("2 - Please set up APP_KEY and APP_SECRET in payplus.properties.");
+        return payplusConfig;
+    }
+
+    private static void acquireCustomersConfig(ResourceBundle payplusConfig) {
+
+        MODEL_CUSTOMERS = payplusConfig.getString("MODEL");
+
+        // using default configuration if MODEL_CUSTOMERS's value equals "TEST"
+        if (MODEL_CUSTOMERS.equals("TEST")) {
+            return;
+
+        } else if (MODEL_CUSTOMERS.equals("PRODUCTION")) {
+
+            try {
+                APP_KEY = payplusConfig.getString("APP_KEY");
+                APP_SECRET = payplusConfig.getString("APP_SECRET");
+            } catch (MissingResourceException mre) {
+                throw new PayplusConfigException("1 - Please set up APP_KEY and APP_SECRET in payplus.properties.");
+            }
+
+            if (PayplusUtil.isNull(APP_KEY) || PayplusUtil.isNull(APP_SECRET)) {
+                throw new PayplusConfigException("2 - Please set up APP_KEY and APP_SECRET in payplus.properties.");
+            }
+            MERCHANT_NO = APP_KEY;
         }
     }
+
+    private static void loadDefaultConfig() {
+
+        ResourceBundle rb = ResourceBundle.getBundle("cfg");
+
+        // using default value for test environment corresponding with 'SELF' value of model
+        MODEL = rb.getString("MODEL");
+        ADDRESS = rb.getString("ADDRESS");
+        APP_KEY = rb.getString("APP_KEY");
+        APP_SECRET = rb.getString("APP_SECRET");
+        MERCHANT_NO = rb.getString("MERCHANT_NO");
+        SIGN_ALGORITHM = rb.getString("SIGN_ALGORITHM");
+    }
+
+
+    public static void init(String path) {
+
+        loadDefaultConfig();
+
+        if (MODEL.equals("CUSTOMERS")) {
+
+            if (PayplusUtil.isNull(path))
+                acquireCustomersConfig(getResourceOBJ());
+            else
+                acquireCustomersConfig(getResourceOBJ(path));
+        }
+    }
+
 }

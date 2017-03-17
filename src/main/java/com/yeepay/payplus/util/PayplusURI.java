@@ -27,7 +27,7 @@ public class PayplusURI {
 
     /**
      * 1.2.2 商户充值查询
-     * @see 4.1.2 订单查询
+     * 4.1.2 订单查询
      */
 
     /**
@@ -37,8 +37,7 @@ public class PayplusURI {
 
     /**
      * 1.2.4 转账查询
-     *
-     * @see 2.4.3 转账查询
+     * 2.4.3 转账查询
      */
 
     /**
@@ -73,8 +72,7 @@ public class PayplusURI {
 
     /**
      * 2.2.1 绑卡
-     *
-     * @see 2.1.2 实名
+     * 2.1.2 实名
      */
     public static final String USER_BINDCARD = "/rest/v1.0/payplus/user/bindCard";
 
