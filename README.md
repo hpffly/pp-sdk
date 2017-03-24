@@ -1,6 +1,6 @@
 # PP-SDK In Action
 
-> PP-SDK是基于[Payplus](http://payplus.yeepay.com)接口封装的开发工具包。她屏蔽了大部分细节、简化了接入流程、同时提供了一些便捷的方法和标准化的参数枚举值。帮助开发者在接入过程中避开一些常见的问题，让开发者快速接入[Payplus](http://payplus.yeepay.com)的服务。
+> PP-SDK是基于[Payplus](http://www.jia007.com)接口封装的开发工具包。她屏蔽了大部分细节、简化了接入流程、同时提供了一些便捷的方法和标准化的参数枚举值。帮助开发者在接入过程中避开一些常见的问题，让开发者快速接入[Payplus](http://payplus.yeepay.com)的服务。
 
 > *注: 该开发工具包仅支持Java语言，其他语言开发者可以参照Payplus的官方文档。*
 
@@ -40,7 +40,7 @@ MODEL=TEST
 
 ### DEMO
 
-下面我们使用Java作为开发语言，对接[Payplus](http://payplus.yeepay.com)的用户注册接口。
+下面我们使用Java作为开发语言，对接[Payplus](http://www.jia007.com)的用户注册接口。
 
 ```java
 //pp-sdk核心类
@@ -81,8 +81,6 @@ requestNo: 9a90660604524e4e89ab1f51eabc5127
 ```
 
 ### 发布生产
-
-> 申请使用这套支付系统：*<ppsupport@yeepay.com>*
 
 需要修改payplus.properties, 填写APP_KEY和APP_SECRET, 并将MODEL置为PRODUCTION.
 
@@ -164,7 +162,7 @@ public class PayplusResp {
 String requestNo = PayplusUtil.genRequestNo();
 ```
 
-* 使用符合[Payplus](http://payplus.yeepay.com)标准的时间格式
+* 使用符合[Payplus](http://www.jia007.com)标准的时间格式
 
 ```java
 String formattedDateString = PayplusUtil.getFormatDateString(new Date());
